@@ -1,0 +1,45 @@
+{
+  "name": "silex-jekyll-editor",
+  "version": "2.5.60",
+  "description": "Silex website builder as a Jekyll template editor",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=8.10.0 <=11.15.0"
+  },
+  "scripts": {
+    "start": "npm run build && node .",
+    "build": "npm run build:prodotype",
+    "build:prodotype": "cp components/* node_modules/silex-website-builder/src/prodotype/components/ && cd node_modules/silex-website-builder/ && npm run build:components"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silexlabs/silex-jekyll-editor.git"
+  },
+  "keywords": [
+    "silex",
+    "website",
+    "builder",
+    "free",
+    "foss",
+    "website builder",
+    "diy",
+    "jekyll",
+    "11ty",
+    "liquid",
+    "static"
+  ],
+  "author": "lexoyo",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/silexlabs/Silex/issues"
+  },
+  "homepage": "https://www.silex.me",
+  "dependencies": {
+    "silex-website-builder": "2.5.60"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "nodemon": "^2.0.4",
+    "prodotype": "^1.0.21"
+  }
+}
