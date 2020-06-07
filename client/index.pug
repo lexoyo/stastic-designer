@@ -1,0 +1,9 @@
+extends ../node_modules/silex-website-builder/src/html/index.jade
+
+append body-end
+  script(type='text/javascript' src='client.js')
+  
+append silex-options
+  script.
+    console.log(silex)
+    silex.config.componentFolders.push('components/')

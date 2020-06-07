@@ -8,8 +8,9 @@
   },
   "scripts": {
     "start": "npm run build && node .",
-    "build": "npm run build:prodotype",
-    "build:prodotype": "cp components/* node_modules/silex-website-builder/src/prodotype/components/ && cd node_modules/silex-website-builder/ && npm run build:components"
+    "build": "npm run build:components && npm run build:html",
+    "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
+    "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,13 @@
   },
   "homepage": "https://www.silex.me",
   "dependencies": {
+    "serve-static": "^1.14.1",
     "silex-website-builder": "2.5.60"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
     "nodemon": "^2.0.4",
-    "prodotype": "^1.0.21"
+    "prodotype": "^1.0.21",
+    "pug-cli": "^1.0.0-alpha6"
   }
 }
