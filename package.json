@@ -1,7 +1,7 @@
 {
-  "name": "silex-jekyll-editor",
-  "version": "2.5.60",
-  "description": "Silex website builder as a Jekyll template editor",
+  "name": "templator",
+  "version": "2.6.0",
+  "description": "template editor based on Silex website builder",
   "main": "server/index.js",
   "engines": {
     "node": ">=8.10.0 <=11.15.0"
@@ -37,12 +37,12 @@
   "homepage": "https://www.silex.me",
   "dependencies": {
     "serve-static": "^1.14.1",
-    "silex-website-builder": "2.5.60"
+    "prodotype": "silexlabs/Prodotype#develop",
+    "silex-website-builder": "silexlabs/Silex#develop"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
     "nodemon": "^2.0.4",
-    "prodotype": "^1.0.21",
     "pug-cli": "^1.0.0-alpha6"
   }
 }
