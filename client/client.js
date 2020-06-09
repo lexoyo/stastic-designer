@@ -5,8 +5,7 @@ silex.subscribeSite((prev, next) => {
     const folder = silex.getSite().publicationPath.url
     silex.loadComponents([
       './prodotype/components', 
-      folder + '/.silex/components/',
-      'components/',
+      folder + '/../.silex/components/',
     ])
   }
 })

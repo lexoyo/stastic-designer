@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "npm run build && node .",
-    "build": "npm run build:components && npm run build:html",
-    "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
+    "build": "npm run build:html",
+    "old-build:components": "mkdir -p pub/components && prodotype components/ pub/components",
     "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"
   },
   "repository": {
@@ -37,7 +37,6 @@
   "homepage": "https://www.silex.me",
   "dependencies": {
     "serve-static": "^1.14.1",
-    "prodotype": "silexlabs/Prodotype#develop",
     "silex-website-builder": "silexlabs/Silex#develop"
   },
   "devDependencies": {
