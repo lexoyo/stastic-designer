@@ -7,14 +7,15 @@
     "node": ">=8.10.0 <=11.15.0"
   },
   "scripts": {
-    "start": "npm run build && node .",
+    "postinstall": "electron-rebuild",
+    "start": "electron .",
     "build": "npm run build:components && npm run build:html",
     "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
     "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/silexlabs/silex-jekyll-editor.git"
+    "url": "git+https://github.com/lexoyo/templator.git"
   },
   "keywords": [
     "silex",
@@ -43,6 +44,9 @@
     "@types/jest": "^25.2.3",
     "nodemon": "^2.0.4",
     "prodotype": "^1.0.22",
-    "pug-cli": "^1.0.0-alpha6"
+    "pug-cli": "^1.0.0-alpha6",
+    "electron": "9.0.0",
+    "electron-builder": "22.7.0",
+    "electron-rebuild": "1.11.0"
   }
 }
