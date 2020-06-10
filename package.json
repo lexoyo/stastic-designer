@@ -1,6 +1,6 @@
 {
   "name": "templator",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "template editor based on Silex website builder",
   "main": "server/index.js",
   "engines": {
