@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/jest": "^25.2.3",
     "nodemon": "^2.0.4",
+    "prodotype": "^1.0.22",
     "pug-cli": "^1.0.0-alpha6"
   }
 }

@@ -10,11 +10,9 @@ config.ceOptions.enableSftp = false
 config.ceOptions.enableFs = true
 
 // allow to publish only in a local folder
-console.log('before', config.publisherOptions)
 config.publisherOptions.skipHostingSelection = true
 config.publisherOptions.enableHostingUnifile = false
 config.publisherOptions.enableHostingGhPages = false
-console.log('after', config.publisherOptions)
 
 // create the Silex server
 const silex = new SilexServer(config)
