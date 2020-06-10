@@ -1,0 +1,23 @@
+---
+name: Generic Template
+description: 'Add a template in your site, with a preview which will be replaced during publication of your website.'
+category: Components
+tags:
+- template
+- text
+baseElement: html
+faIconClass: fa-code
+isPrivate: false
+props:
+- name: preview
+  displayName: "Preview"
+  description: "Text to display in Silex and preview. This will be replaced by actual content after publish."
+  expandable: false
+  type: multiline
+  default: '<p>This is the preview. Edit this component to change it and set a template to replace the preview when the site is published.</p>'
+- name: template
+  description: "Paste here the template which will replace the preview when you publish your site."
+  expandable: false
+  type: action
+  default: '{{ content }}'
+  
