@@ -2,13 +2,15 @@
   "name": "templator",
   "version": "2.6.1",
   "description": "template editor based on Silex website builder",
-  "main": "server/index.js",
+  "main": "server/electron.js",
   "engines": {
     "node": ">=8.10.0 <=11.15.0"
   },
   "scripts": {
     "postinstall": "electron-rebuild",
-    "start": "electron .",
+    "start": "npm run start:electron",
+    "start:electron": "electron .",
+    "start:web": "node server/web.js",
     "build": "npm run build:components && npm run build:html",
     "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
     "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"

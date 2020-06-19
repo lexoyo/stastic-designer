@@ -20,7 +20,9 @@ module.exports.prototype.getOptions = function(session) {
   };
 };
 
-module.exports.prototype.finalizePublication = () => {}
+module.exports.prototype.finalizePublication = (context, onStatus) => {
+  console.log('>>>>>>>>>>>>>>>>>>> TODO: use context.data.elements to build forestry fm template')
+}
 module.exports.prototype.beforeWrite = (context, actions) => {
   return actions.map((action) => {
     // if (action.name === 'writefile' && action.path.endsWith('/styles.css')) {
