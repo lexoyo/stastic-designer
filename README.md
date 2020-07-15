@@ -1,4 +1,4 @@
-# Templator
+# Stastic designer
 
 This is a work in progress to create a drag and drop universal template editor based on [Silex open source website builder](https://www.silex.me).
 
