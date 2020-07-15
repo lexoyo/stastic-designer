@@ -1,6 +1,7 @@
 const { SilexServer, Config } = require('silex-website-builder')
 const serveStatic = require('serve-static')
 const path = require('path')
+const isElectron = require('is-electron')
 
 // create a default config
 const config = new Config()
@@ -8,9 +9,9 @@ const config = new Config()
 // enable only local file system to store files
 // and github to publish
 config.ceOptions.enableSftp = false
-config.ceOptions.enableFs = true
-config.ceOptions.githubClientId = 'f124e4148bf9d633d58b'
-config.ceOptions.githubClientSecret = '1a8fcb93d5d0786eb0a16d81e8c118ce03eefece'
+config.ceOptions.enableFs = isElectron()
+config.ceOptions.githubClientId = process.env.GITHUB_CLIENT_ID || 'f124e4148bf9d633d58b'
+config.ceOptions.githubClientSecret = process.env.GITHUB_CLIENT_SECRET || '1a8fcb93d5d0786eb0a16d81e8c118ce03eefece'
 
 // allow to publish only in a local folder
 config.publisherOptions.skipHostingSelection = true
