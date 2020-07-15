@@ -39,7 +39,7 @@
   },
   "homepage": "https://www.silex.me",
   "dependencies": {
-    "silex-website-builder": "silexlabs/Silex#develop"
+    "silex-website-builder": "silexlabs/Silex#5f0d79ec"
   },
   "devDependencies": {
     "prodotype": "^1.0.22",
