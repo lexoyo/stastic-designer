@@ -8,7 +8,7 @@
   },
   "scripts": {
     "postinstall": "electron-rebuild",
-    "start": "npm run start:electron",
+    "start": "npm run start:web",
     "start:electron": "electron .",
     "start:web": "node server/web.js",
     "build": "npm run build:components && npm run build:html",
