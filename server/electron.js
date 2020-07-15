@@ -7,41 +7,42 @@ const Url = require('url')
 let win;
 
 function createWindow() {
+  // setTimeout to let Silex server start
   setTimeout(() => {
-  // Create the browser window.
-  win = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    minWidth: 950,
-    minHeight: 630,
-    // titleBarStyle: 'hidden',
-    frame: true,
-    icon: Path.join(__dirname, '../node_modules/silex-website-builder/dist/public/assets/logo-silex-small.png'),
-    webPreferences: {
-      nodeIntegration: false,
-      // Needed by CE callback
-      // Could be remove with next version
-      sandbox: true,
-    },
+    // Create the browser window.
+    win = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      minWidth: 950,
+      minHeight: 630,
+      // titleBarStyle: 'hidden',
+      frame: true,
+      icon: Path.join(__dirname, '../node_modules/silex-website-builder/dist/public/assets/logo-silex-small.png'),
+      webPreferences: {
+        nodeIntegration: false,
+        // Needed by CE callback
+        // Could be remove with next version
+        sandbox: true,
+      },
 
-  });
+    });
 
-  // and load the index.html of the app.
-  const url = 'http://localhost:' + (process.env.PORT || 6805) + '/';
-  console.log('Sarting app on ' + url);
-  win.loadURL(url);
+    // and load the index.html of the app.
+    const url = 'http://localhost:' + (process.env.PORT || 6805) + '/';
+    console.info('Starting electron app at ' + url);
+    win.loadURL(url);
 
-  // Open the DevTools.
-  // win.webContents.openDevTools();
+    // Open the DevTools.
+    // win.webContents.openDevTools();
 
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null;
-  });
-  }, 10000)
+    // Emitted when the window is closed.
+    win.on('closed', () => {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      win = null;
+    });
+  }, 0)
 }
 
 // This method will be called when Electron has finished

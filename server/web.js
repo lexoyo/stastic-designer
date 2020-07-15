@@ -30,8 +30,6 @@ silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))
 // serve modified html
 silex.app.use('/', serveStatic(path.resolve('./pub')))
 
-// start Silex
-silex.start(function() {
-  console.log('server started')
-})
+// export Silex so that the caller can start Silex with silex.start(() => {})
+module.exports = silex
 
