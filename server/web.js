@@ -9,7 +9,7 @@ const config = new Config()
 // enable only local file system to store files
 // and github to publish
 config.ceOptions.enableSftp = false
-config.ceOptions.enableFs = isElectron()
+config.ceOptions.enableFs = isElectron() || process.env.ENABLE_FS
 config.ceOptions.githubClientId = process.env.GITHUB_CLIENT_ID || 'f124e4148bf9d633d58b'
 config.ceOptions.githubClientSecret = process.env.GITHUB_CLIENT_SECRET || '1a8fcb93d5d0786eb0a16d81e8c118ce03eefece'
 

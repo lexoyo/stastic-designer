@@ -1,4 +1,3 @@
-
 // 11ty app
 // load site components
 silex.subscribeSite((prev, next) => {
@@ -6,7 +5,10 @@ silex.subscribeSite((prev, next) => {
     const folder = silex.getSite().publicationPath.url
     silex.loadComponents([
       './prodotype/components', 
-      folder + '/../.silex/components/',
+      './components', 
+      //folder + '/../.silex/components/',
+      //folder + '/_silex/components/',
+      folder + '/admin/silex/components/',
     ])
   }
 })
@@ -88,7 +90,10 @@ function updateForestryApp() {
 }
 
 function getAppData(selection) {
-  return selection[0].data.forestry
+  if (selection && selection[0] && selection[0].data) {
+    return selection[0].data.forestry
+  }
+  return null
 }
 
 function updateEditor(selection) {
@@ -144,4 +149,3 @@ function applyFMTemplate() {
     }
   }])
 }
-

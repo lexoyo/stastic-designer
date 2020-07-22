@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node .",
+    "start:debug": "ENABLE_FS=true node .",
     "electron": "electron .",
     "build": "npm run build:components && npm run build:html",
     "build:electron": "electron-rebuild",
