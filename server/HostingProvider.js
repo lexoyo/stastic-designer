@@ -37,12 +37,14 @@ module.exports.prototype.beforeWrite = (context, actions) => {
       return {
         ...action,
         content: action.content.replace(/<silex-template>((.|\n)+?)<\/silex-template>/g, (match, p1) => decodeHTMLEntities(p1)),
+        // remove 'page-' from layout names
+        path: action.path.replace(/\/page-[^\/]*?/, '/'),
       }
     }
     return action
   })
 }
-module.exports.prototype.getPermalink = (pageName) => pageName === 'index.html' ? '/' : pageName
+module.exports.prototype.getDefaultPageFileName = (context, data) => data.pages[0].id + '.html'
 
 // for jekyll
 module.exports.prototype.getHtmlFolder = (context, defaultFolder) => '_layouts'
