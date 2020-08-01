@@ -40,7 +40,7 @@
   "homepage": "https://www.silex.me",
   "dependencies": {
     "is-electron": "^2.2.0",
-    "silex-website-builder": "silexlabs/Silex#5f0d79ec"
+    "silex-website-builder": "silexlabs/Silex#develop"
   },
   "devDependencies": {
     "prodotype": "^1.0.22",
