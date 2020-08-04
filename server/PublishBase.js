@@ -23,20 +23,15 @@ module.exports.prototype.getOptions = function(session) {
 module.exports.prototype.finalizePublication = (context, onStatus) => {
   console.log('>>>>>>>>>>>>>>>>>>> TODO: use context.data.elements to build forestry fm template')
 }
+
 module.exports.prototype.beforeWrite = (context, actions) => {
   return actions.map((action) => {
-    // if (action.name === 'writefile' && action.path.endsWith('/styles.css')) {
-    //   // for jekyll
-    //   return {
-    //     ...action,
-    //     content: '---\n---' + action.content.toString('utf-8'),
-    //   }
-    // } else 
     if (action.name === 'writefile' && action.path.endsWith('.html')) {
-      // leave templates unescaped
       return {
         ...action,
+        // leave templates unescaped and remove <silex-template> tags
         content: action.content.replace(/<silex-template>((.|\n)+?)<\/silex-template>/g, (match, p1) => decodeHTMLEntities(p1)),
+
         // remove 'page-' from layout names
         path: action.path.replace(/\/page-[^\/]*?/, '/'),
       }

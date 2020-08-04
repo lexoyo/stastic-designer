@@ -6,9 +6,7 @@ silex.subscribeSite((prev, next) => {
     silex.loadComponents([
       './prodotype/components', 
       './components', 
-      folder + '/../.silex/components/',
-      folder + '/_silex/components/',
-      folder + '/admin/silex/components/',
+      folder + '/.silex/components/',
     ])
   }
 })

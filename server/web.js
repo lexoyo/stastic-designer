@@ -2,8 +2,8 @@ const { SilexServer, Config } = require('silex-website-builder')
 const serveStatic = require('serve-static')
 const path = require('path')
 const isElectron = require('is-electron')
-
-// create a default config
+const eleventy = require('./11tyPublish')
+const jekyll = require('./JekyllPublish')
 const config = new Config()
 
 // enable only local file system to store files
@@ -14,7 +14,7 @@ config.ceOptions.githubClientId = process.env.GITHUB_CLIENT_ID || 'f124e4148bf9d
 config.ceOptions.githubClientSecret = process.env.GITHUB_CLIENT_SECRET || '1a8fcb93d5d0786eb0a16d81e8c118ce03eefece'
 
 // allow to publish only in a local folder
-config.publisherOptions.skipHostingSelection = true
+config.publisherOptions.skipHostingSelection = false
 config.publisherOptions.enableHostingUnifile = false
 config.publisherOptions.enableHostingGhPages = false
 
@@ -22,8 +22,8 @@ config.publisherOptions.enableHostingGhPages = false
 const silex = new SilexServer(config)
 
 // add custom services
-const HostingProvider = require('./HostingProvider.js')
-silex.publishRouter.addHostingProvider(new HostingProvider(silex.unifile))
+silex.publishRouter.addHostingProvider(new eleventy(silex.unifile))
+silex.publishRouter.addHostingProvider(new jekyll(silex.unifile))
 
 // serve custom script
 silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))
