@@ -31,9 +31,6 @@ module.exports.prototype.beforeWrite = (context, actions) => {
         ...action,
         // leave templates unescaped and remove <silex-template> tags
         content: action.content.replace(/<silex-template>((.|\n)+?)<\/silex-template>/g, (match, p1) => decodeHTMLEntities(p1)),
-
-        // remove 'page-' from layout names
-        path: action.path.replace(/\/page-[^\/]*?/, '/'),
       }
     }
     return action
