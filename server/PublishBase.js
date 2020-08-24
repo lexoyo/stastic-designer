@@ -41,6 +41,8 @@ module.exports.prototype.getDefaultPageFileName = (context, data) => data.pages[
 // for jekyll
 module.exports.prototype.getHtmlFolder = (context, defaultFolder) => '_layouts'
 module.exports.prototype.getRootUrl = (context, rootUrl) => '{{ site.url }}{{ site.baseurl }}/'
+// prevent page name added to page title (the page name here is a layout name)
+module.exports.prototype.getPageTitle = (defaultTitle, context) => defaultTitle
 
 function decodeHTMLEntities(text) {
   const entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']]
