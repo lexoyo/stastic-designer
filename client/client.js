@@ -142,7 +142,7 @@ function applyFMTemplate() {
       component: {
         templateName: 'template', // name of the generic template component
         data: {
-          template: `{% include '${ui.fmTemplateInput.value}.njk'}`,
+          template: `{% include '${ui.fmTemplateInput.value}.njk' %}`,
           preview: el.innerHtml,
         }
       },
