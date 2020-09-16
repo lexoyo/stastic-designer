@@ -141,8 +141,10 @@ function applyFMTemplate() {
       // data for silex component (+ menu) 
       component: {
         templateName: 'template', // name of the generic template component
-        template: `{% include '${ui.fmTemplateInput.value}.njk'}`,
-        preview: el.innerHtml,
+        data: {
+          template: `{% include '${ui.fmTemplateInput.value}.njk'}`,
+          preview: el.innerHtml,
+        }
       },
     }
   }])
