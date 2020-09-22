@@ -51,6 +51,7 @@ function initUi(cbk) {
         <option value="list">List</option>
         <option value="file">File</option>
         <option value="image_gallery">Gallery</option>
+        <option value="translated">Translated text</option>
       </select>
       <label>Name</label>
       <input type="text" data-attr-name="name"></input>
@@ -124,11 +125,25 @@ function hideEditor() {
 }
 
 function applyFMTemplate() {
+  const template = ui.fmTemplateInput.value
   const selection = silex.getSelectedElements()
   const el = selection[0]
-  silex.updateElements([{
-    ...el,
-    data: {
+  const data = (() => {
+    const component = silex.getUi().components[template]
+    if(component && component.props.find(p => p.name === 'preview')) {
+      // Convert to an existing component
+      return {
+        ...el.data,
+        component: {
+          templateName: template,
+          data: {
+            preview: el.innerHtml,
+          }
+        },
+      }
+    }
+    // convert to a generic template + forestry
+    return {
       ...el.data,
       // data used by the hosting provider to generate forestry FM templates
       forestry: {
@@ -142,10 +157,14 @@ function applyFMTemplate() {
       component: {
         templateName: 'template', // name of the generic template component
         data: {
-          template: `{% include '${ui.fmTemplateInput.value}.njk' %}`,
+          template: `{% include '${template}.njk' %}`,
           preview: el.innerHtml,
         }
       },
     }
+  })()
+  silex.updateElements([{
+    ...el,
+    data,
   }])
 }
