@@ -24,10 +24,11 @@ Publish the website to a folder containing a Jekyll or 11ty website, on github o
 
 ## Local Development
 
-Start the server:
+If you want to work on your local hard drive, enable the `fs` service and start Silex like this:
 
 ```
 $ npm install
-$ npm start
+$ npm run build
+$ ENABLE_FS=true npm start
 ```
 
