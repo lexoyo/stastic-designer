@@ -15,6 +15,7 @@ Right now it works with Jekyll and 11ty but nothing is documented yet
 * [ ] The forestry component: generate the forestry.io files to create a custom admin corresponding to the current page (in forestry this means a page type, and an editor for each page type)
 * [x] Publication for 11ty and Jekyll: each page becomes a layout, files are stored in the proper folders and formats (css, js, html, assets)
 * [x] Translation component: display different content depending on some liquid variable
+* [x] Load components in the "+" menu which are specific to a website and stored with the website
 
 ## Support and documentation
 
