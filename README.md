@@ -12,6 +12,10 @@ Right now it works with Jekyll and 11ty but nothing is documented yet
 * A new property to make elements "templates", i.e. they will be displayed normally in Silex and in preview, but will be replaced during publication with a liquid template for Jekyll or 11ty
 * When publishing a website, generate the forestry.io files to create a custom admin (page types, editor for each page type)
 
+## Support and documentation
+
+Please use the mother project's [Silex issues](https://github.com/silexlabs/Silex/issues) and [Silex documentation](https://github.com/silexlabs/Silex/wiki)
+
 ## Instructions
 
 ### Designer
