@@ -8,9 +8,13 @@ Right now it works with Jekyll and 11ty but nothing is documented yet
 
 ## Features
 
-* desktop install or use online
-* A new property to make elements "templates", i.e. they will be displayed normally in Silex and in preview, but will be replaced during publication with a liquid template for Jekyll or 11ty
-* When publishing a website, generate the forestry.io files to create a custom admin (page types, editor for each page type)
+* [x] Desktop app to work locally and possibly offline
+* [x] Online mode to work online without install - I have setup this [instance you can use to test it])(https://designer.stastic.net)
+* [x] Tool to convert the selected element to a component 
+* [x] The "template" component: display arbitrary HTML as a preview in Silex and in preview mode, and will be replaced by another HTML during publication possibly including liquid or any template language
+* [ ] The forestry component: generate the forestry.io files to create a custom admin corresponding to the current page (in forestry this means a page type, and an editor for each page type)
+* [x] Publication for 11ty and Jekyll: each page becomes a layout, files are stored in the proper folders and formats (css, js, html, assets)
+* [x] Translation component: display different content depending on some liquid variable
 
 ## Support and documentation
 
