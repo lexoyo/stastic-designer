@@ -45,8 +45,8 @@
   "devDependencies": {
     "prodotype": "^1.0.22",
     "pug-cli": "^1.0.0-alpha6",
-    "electron": "9.1.0",
-    "electron-builder": "22.7.0",
-    "electron-rebuild": "1.11.0"
+    "electron": "10.1.3",
+    "electron-builder": "22.8.1",
+    "electron-rebuild": "2.2.0"
   }
 }
