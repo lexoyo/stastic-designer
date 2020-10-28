@@ -43,11 +43,11 @@
     "silex-website-builder": "silexlabs/Silex#develop"
   },
   "devDependencies": {
-    "prodotype": "^1.0.22",
+    "prodotype": "^1.0.23",
     "pug-cli": "^1.0.0-alpha6",
-    "electron": "10.1.3",
-    "electron-builder": "22.8.1",
-    "electron-rebuild": "2.2.0",
+    "electron": "10.1.5",
+    "electron-builder": "22.9.1",
+    "electron-rebuild": "2.3.2",
     "npm-run-all": "^4.1.5"
   }
 }
