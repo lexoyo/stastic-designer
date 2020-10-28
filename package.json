@@ -4,7 +4,7 @@
   "description": "template editor based on Silex website builder",
   "main": "server/index.js",
   "engines": {
-    "node": ">=8.10.0 <=11.15.0"
+    "node": ">=10.16.3 <=11.15.0"
   },
   "scripts": {
     "start": "node .",
