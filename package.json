@@ -10,7 +10,7 @@
     "start": "node .",
     "start:debug": "ENABLE_FS=true node .",
     "electron": "electron .",
-    "build": "npm run build:components && npm run build:html",
+    "build": "run-s build:components build:html",
     "build:electron": "electron-rebuild",
     "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
     "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"
@@ -47,6 +47,7 @@
     "pug-cli": "^1.0.0-alpha6",
     "electron": "10.1.3",
     "electron-builder": "22.8.1",
-    "electron-rebuild": "2.2.0"
+    "electron-rebuild": "2.2.0",
+    "npm-run-all": "^4.1.5"
   }
 }
