@@ -10,10 +10,11 @@
     "start": "node .",
     "start:debug": "ENABLE_FS=true node .",
     "electron": "electron .",
-    "build": "run-s build:components build:html",
+    "build": "run-s build:pub build:components build:html",
     "build:electron": "electron-rebuild",
-    "build:components": "mkdir -p pub/components && prodotype components/ pub/components",
-    "build:html": "mkdir -p pub/ && pug client/index.pug --out pub/"
+    "build:pub": "mkdir -p pub/",
+    "build:components": "prodotype components/ pub/components",
+    "build:html": "pug client/index.pug --out pub/"
   },
   "repository": {
     "type": "git",
