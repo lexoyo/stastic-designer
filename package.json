@@ -41,14 +41,14 @@
   "homepage": "https://www.silex.me",
   "dependencies": {
     "is-electron": "^2.2.0",
-    "silex-website-builder": "silexlabs/Silex#develop"
-  },
-  "devDependencies": {
+    "silex-website-builder": "silexlabs/Silex#develop",
     "prodotype": "^1.0.23",
     "pug-cli": "^1.0.0-alpha6",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
     "electron": "10.1.5",
     "electron-builder": "22.9.1",
-    "electron-rebuild": "2.3.2",
-    "npm-run-all": "^4.1.5"
+    "electron-rebuild": "2.3.2"
   }
 }
