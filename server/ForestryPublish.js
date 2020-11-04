@@ -56,6 +56,13 @@ module.exports.toForestryTemplates = (data) => {
     ...page,
     hide_body: true,
     fields: page.fields.concat([{
+      name: 'permalink',
+      type: 'text',
+      label: 'Permalink',
+      config: {
+        required: true,
+      }
+    }, {
       name: 'layout',
       type: 'text',
       hidden: true,
