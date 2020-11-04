@@ -43,7 +43,16 @@ function initUi() {
         .full-width { min-width: 100%; min-height: 100px; }
         .resizable { resize: vertical; }
       </style>
-      <h1>Forestry template</h1>
+ 
+      <h1>Templates</h1>
+      <label for="before">Before children</label><br/><br/>
+      <textarea class="full-width resizable" id="before" data-attr-name="before" placeholder="Template to add before the element during publication"></textarea><br/><br/>
+      <label for="replace">Replace children</label><br/><br/>
+      <textarea class="full-width resizable" id="replace" data-attr-name="replace" placeholder="Template to replace the element during publication"></textarea><br/><br/>
+      <label for="after">After children</label><br/><br/>
+      <textarea class="full-width resizable" id="after" data-attr-name="after" placeholder="Template to add after the element during publication"></textarea><br/><br/>
+
+      <h1>CMS Content Type (Forestry)</h1>
       <label for="type">Forestry Front Matter Template</label>
       <select id="type" data-attr-name="type">
         <option value=""></option>
@@ -65,14 +74,6 @@ function initUi() {
       <input type="text" data-attr-name="label"></input>
       <label>Default Value</label>
       <input type="text" data-attr-name="default"></input>
-      
-      <h1>Template Published</h1>
-      <label for="before">Before children</label><br/><br/>
-      <textarea class="full-width resizable" id="before" data-attr-name="before" placeholder="Template to add before the element during publication"></textarea><br/><br/>
-      <label for="replace">Replace children</label><br/><br/>
-      <textarea class="full-width resizable" id="replace" data-attr-name="replace" placeholder="Template to replace the element during publication"></textarea><br/><br/>
-      <label for="after">After children</label><br/><br/>
-      <textarea class="full-width resizable" id="after" data-attr-name="after" placeholder="Template to add after the element during publication"></textarea><br/><br/>
     `
     // add to the dom
     editor.appendChild(containerEl)
@@ -221,7 +222,7 @@ function applyFMTemplate() {
         ...el.data.forestry,
         type: reset ? '' : ui.fmTemplateInput.value,
         name: reset ? '' : ui.nameInput.value || el.id,
-        label: reset ? '' : ui.labelInput.value || el.type,
+        label: reset ? '' : ui.labelInput.value || el.type + ' ' + el.id,
         default: reset ? '' : ui.defaultInput.value || el.innerHtml,
       },
     },
