@@ -1,0 +1,345 @@
+{
+    "site": {
+        "title": "",
+        "description": null,
+        "enableMobile": true,
+        "websiteUrl": null,
+        "faviconPath": null,
+        "thumbnailSocialPath": null,
+        "descriptionSocial": null,
+        "titleSocial": null,
+        "lang": "",
+        "width": 1200,
+        "headUser": "",
+        "headStyle": "",
+        "headScript": "",
+        "hostingProvider": "unifile",
+        "twitterSocial": null,
+        "dataSources": {},
+        "fonts": [
+            {
+                "family": "'Roboto', sans-serif",
+                "href": "https://fonts.googleapis.com/css?family=Roboto"
+            }
+        ],
+        "styles": {
+            "all-style": {
+                "className": "all-style",
+                "templateName": "text",
+                "displayName": "All style",
+                "styles": {
+                    "desktop": {
+                        "normal": {
+                            "className": "all-style",
+                            "pseudoClass": "normal",
+                            "All": {
+                                "font-family": "'Roboto', sans-serif"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "isTemplate": false,
+        "file": {
+            "name": "editable.html",
+            "folder": "tmp",
+            "path": "tmp/editable.html",
+            "service": "fs",
+            "url": "http://localhost:6805/ce/fs/get/tmp/editable.html",
+            "absPath": "/ce/fs/get/tmp/editable.html"
+        },
+        "prodotypeDependencies": {}
+    },
+    "pages": [
+        {
+            "id": "page-page-1",
+            "displayName": "Page 1",
+            "link": {
+                "linkType": "LinkTypePage",
+                "href": "#!page-page-1"
+            },
+            "canDelete": true,
+            "canProperties": true,
+            "canMove": true,
+            "canRename": true,
+            "opened": false
+        },
+        {
+            "id": "page-page-2",
+            "displayName": "Page 2",
+            "link": {
+                "linkType": "LinkTypePage",
+                "href": "#!page-page-2"
+            },
+            "canDelete": true,
+            "canRename": true,
+            "canMove": true,
+            "canProperties": true,
+            "opened": false
+        }
+    ],
+    "elements": [
+        {
+            "id": "body-initial",
+            "pageNames": [],
+            "classList": [],
+            "type": "container-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [
+                "silex-id-1604481199082-34",
+                "silex-id-1604481199756-35",
+                "silex-id-1604481216725-39",
+                "silex-id-1442914737143-3"
+            ],
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": false,
+            "enableDrop": true,
+            "enableResize": {
+                "top": false,
+                "bottom": false,
+                "left": false,
+                "right": false
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "background-color": "rgba(255,255,255,1)",
+                    "position": "static"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null
+            },
+            "innerHtml": "",
+            "tagName": "BODY"
+        },
+        {
+            "id": "silex-id-1442914737143-3",
+            "pageNames": [],
+            "classList": [
+                "no-forestry"
+            ],
+            "type": "text-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [],
+            "link": null,
+            "enableEdit": true,
+            "enableDrag": true,
+            "enableDrop": false,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "width": "241px",
+                    "top": "162px",
+                    "left": "636px",
+                    "height": "86px",
+                    "position": "absolute"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null,
+                "template": {
+                    "before": "<?php before() ?>",
+                    "replace": "",
+                    "after": "<?php after() ?>"
+                },
+                "forestry": {
+                    "type": "",
+                    "name": "",
+                    "label": "",
+                    "default": ""
+                }
+            },
+            "innerHtml": "<p>Page ALL<br></p><p>NO FORESTRY<br></p>",
+            "tagName": "DIV"
+        },
+        {
+            "id": "silex-id-1604481199082-34",
+            "pageNames": [
+                "page-page-1"
+            ],
+            "classList": [],
+            "type": "text-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [],
+            "link": null,
+            "enableEdit": true,
+            "enableDrag": true,
+            "enableDrop": false,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "width": "241px",
+                    "top": "300px",
+                    "left": "636px",
+                    "height": "86px",
+                    "position": "absolute"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null,
+                "template": {
+                    "before": "<?php before() ?>",
+                    "replace": "REPLACE",
+                    "after": "<?php after() ?>"
+                },
+                "forestry": {
+                    "type": "text",
+                    "name": "silex-id-1604481199082-34",
+                    "label": "text-element",
+                    "default": "<p>Page 1<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>"
+                }
+            },
+            "innerHtml": "<p>Page 1<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>",
+            "tagName": "DIV"
+        },
+        {
+            "id": "silex-id-1604481199756-35",
+            "pageNames": [
+                "page-page-2"
+            ],
+            "classList": [
+                "with-forestry"
+            ],
+            "type": "text-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [],
+            "link": null,
+            "enableEdit": true,
+            "enableDrag": true,
+            "enableDrop": false,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "width": "241px",
+                    "top": "294px",
+                    "left": "917px",
+                    "height": "86px",
+                    "position": "absolute"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null,
+                "template": {
+                    "before": "<!-- COMMENT -->\n<h1>BEFORE</h1>",
+                    "replace": "<h1>PAGE 2</h1>",
+                    "after": "<!-- COMMENT -->\n<h1>AFTER</h1>"
+                },
+                "forestry": {
+                    "type": "text",
+                    "name": "silex-id-1604481199756-35",
+                    "label": "text-element",
+                    "default": "<p>Page 2<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>"
+                }
+            },
+            "innerHtml": "<p>Page 2<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>",
+            "tagName": "DIV"
+        },
+        {
+            "id": "silex-id-1604481216725-39",
+            "pageNames": [],
+            "classList": [
+                "with-forestry"
+            ],
+            "type": "text-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [],
+            "link": null,
+            "enableEdit": true,
+            "enableDrag": true,
+            "enableDrop": false,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "width": "241px",
+                    "top": "428px",
+                    "left": "636px",
+                    "height": "86px",
+                    "position": "absolute"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null,
+                "template": {
+                    "before": "",
+                    "replace": "REPLACE",
+                    "after": ""
+                },
+                "forestry": {
+                    "type": "text",
+                    "name": "silex-id-1604481216725-39",
+                    "label": "text-element",
+                    "default": "<p>Page ALL<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>"
+                }
+            },
+            "innerHtml": "<p>Page ALL<br></p><p>Powered by <a href=\"https://www.silex.me/\" target=\"_blank\" title=\"Silex website builder,  free and open source\">Silex website builder</a></p>",
+            "tagName": "DIV"
+        }
+    ]
+}

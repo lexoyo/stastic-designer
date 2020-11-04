@@ -4,6 +4,7 @@ const path = require('path')
 const isElectron = require('is-electron')
 const eleventy = require('./11tyPublish')
 const jekyll = require('./JekyllPublish')
+const forestry = require('./ForestryPublish')
 const config = new Config()
 
 // enable only local file system to store files
@@ -24,6 +25,7 @@ const silex = new SilexServer(config)
 // add custom services
 silex.publishRouter.addHostingProvider(new eleventy(silex.unifile))
 silex.publishRouter.addHostingProvider(new jekyll(silex.unifile))
+silex.publishRouter.addHostingProvider(new forestry(silex.unifile))
 
 // serve custom script
 silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))

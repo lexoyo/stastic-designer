@@ -2,30 +2,11 @@ module.exports = function(unifile) {
     this.unifile = unifile;
 };
 
-module.exports.prototype.getOptions = function(session) {
-  return {
-    name: 'jekyll',
-    displayName: 'Jekyll layout',
-    pleaseCreateAVhost: 'create a Jekyll layout.',
-    afterPublishMessage: 'AFTER PUBLISH MESSAGE',
-    isLoggedIn: true,
-    authorizeUrl: null,
-    dashboardUrl: null,
-    pleaseCreateAVhost: null,
-    vhostsUrl: null,
-    buyDomainUrl: null,
-    skipVhostSelection: true,
-    skipFolderSelection: false,
-    afterPublishMessage: null,
-  };
-};
-
-module.exports.prototype.finalizePublication = (context, onStatus) => {
-  console.log('>>>>>>>>>>>>>>>>>>> TODO: use context.data.elements to build forestry fm template')
-}
+module.exports.prototype.finalizePublication = (context, onStatus) => {}
 
 module.exports.prototype.beforeWrite = (context, actions) => {
   return actions.map((action) => {
+    console.log('beforeWrite', {action, context})
     if (action.name === 'writefile' && action.path.endsWith('.html')) {
       return {
         ...action,
