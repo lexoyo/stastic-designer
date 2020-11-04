@@ -67,11 +67,11 @@ function initUi() {
       <input type="text" data-attr-name="default"></input>
       
       <h1>Template Published</h1>
-      <label for="before">Before</label><br/><br/>
+      <label for="before">Before children</label><br/><br/>
       <textarea class="full-width resizable" id="before" data-attr-name="before" placeholder="Template to add before the element during publication"></textarea><br/><br/>
-      <label for="replace">Replace</label><br/><br/>
+      <label for="replace">Replace children</label><br/><br/>
       <textarea class="full-width resizable" id="replace" data-attr-name="replace" placeholder="Template to replace the element during publication"></textarea><br/><br/>
-      <label for="after">After</label><br/><br/>
+      <label for="after">After children</label><br/><br/>
       <textarea class="full-width resizable" id="after" data-attr-name="after" placeholder="Template to add after the element during publication"></textarea><br/><br/>
     `
     // add to the dom

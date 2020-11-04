@@ -4,9 +4,29 @@ module.exports = function(unifile) {
 
 module.exports.prototype.finalizePublication = (context, onStatus) => {}
 
+module.exports.prototype.beforeSplit = async (context) => {
+  context.data.elements
+  .filter(el => !!el.data.template)
+  .forEach(el => {
+    const doc = context.document
+    const domEl = doc.querySelector('.' + el.id)
+    const domElContent = domEl.querySelector('.silex-element-content') || domEl
+    if(el.data.template.replace) {
+      el.innerHTML = domElContent.innerHTML = el.data.template.replace
+    }
+    if(el.data.template.before) {
+      // FIXME: handle content element
+      domElContent.innerHTML = el.data.template.before + domElContent.innerHTML
+    }
+    if(el.data.template.after) {
+      // FIXME: handle content element
+      domElContent.innerHTML += el.data.template.after
+    }
+  })
+}
+
 module.exports.prototype.beforeWrite = (context, actions) => {
   return actions.map((action) => {
-    console.log('beforeWrite', {action, context})
     if (action.name === 'writefile' && action.path.endsWith('.html')) {
       return {
         ...action,
