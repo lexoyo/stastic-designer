@@ -17,7 +17,7 @@ function createWindow() {
       minHeight: 630,
       // titleBarStyle: 'hidden',
       frame: true,
-      icon: Path.join(__dirname, '../node_modules/silex-website-builder/dist/public/assets/logo-silex-small.png'),
+      icon: Path.join(__dirname, '../build/icon.png'),
       webPreferences: {
         nodeIntegration: false,
         // Needed by CE callback
@@ -27,8 +27,13 @@ function createWindow() {
 
     });
 
+    // open chrome dev tools
+    if(process.env.OPEN_DEV_TOOLS) {
+      win.webContents.openDevTools({ mode: 'detach' })
+    }
+
     // and load the index.html of the app.
-    const url = 'http://localhost:' + (process.env.PORT || 6805) + '/';
+    const url = 'http://localhost:' + (process.env.PORT || 6805) + '/stastic.html';
     console.info('\n[Stastic designer] Load electron app:', url, '\n')
     win.loadURL(url);
 

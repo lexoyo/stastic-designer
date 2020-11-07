@@ -10,11 +10,12 @@
     "start": "node .",
     "start:debug": "ENABLE_FS=true node .",
     "electron": "electron .",
+    "electron:devtools": "OPEN_DEV_TOOLS=true electron .",
     "build": "run-s build:pub build:components build:html",
     "build:electron": "electron-rebuild",
     "build:pub": "mkdir -p pub/",
     "build:components": "prodotype components/ pub/components",
-    "build:html": "pug client/index.pug --out pub/",
+    "build:html": "pug client/stastic.pug --out pub/",
     "test:watch": "jest --watch",
     "test": "jest"
   },
