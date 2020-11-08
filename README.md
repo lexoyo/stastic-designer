@@ -25,7 +25,7 @@ Please use the mother project's [Silex issues](https://github.com/silexlabs/Sile
 
 ### Install
 
-Please follow [Silex Desktop installation instructions](https://github.com/silexlabs/silex-desktop#silex-desktop)).
+Please follow [Silex Desktop installation instructions](https://github.com/silexlabs/silex-desktop#silex-desktop).
 
 ### Designer
 
