@@ -32,16 +32,24 @@ function initListeners(allUis, applyFMTemplate, applyTemplate) {
   allUis.afterInput.onchange = applyTemplate
 }
 function initUi() {
-  const maybeContainer = editor.querySelector('.forestry-app')
+  const maybeContainer = editor.querySelector('.stastic-property')
   if(!maybeContainer) {
     // create the container
     const containerEl = document.createElement('section')
-    containerEl.classList.add('forestry-app')
+    containerEl.classList.add('stastic-property')
     // create the UI
     containerEl.innerHTML = `
       <style>
-        .full-width { min-width: 100%; min-height: 100px; }
-        .resizable { resize: vertical; }
+        .stastic-property .full-width { min-width: 100%; min-height: 100px; }
+        .stastic-property .resizable { resize: vertical; }
+        .stastic-property textarea { 
+          background-color: #393939;
+          border: 1px solid #2A2A2A;
+          border-radius: 2px;
+          box-sizing: border-box;
+          padding: 0 5px;
+          color: white;
+        }
       </style>
  
       <h1>Templates</h1>

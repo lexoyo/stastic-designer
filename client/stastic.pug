@@ -2,13 +2,12 @@ extends ../node_modules/silex-website-builder/src/html/index.jade
 
 append head-start
   script(async, src="https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js")
-  | <script>
-  |   let converter;
-  |   function makeHtml(str) {
-  |     converter = converter || new showdown.Converter();
-  |     return converter.makeHtml(str);
-  |   }
-  | </script>
+  script.
+    let converter;
+    function makeHtml(str) {
+      converter = converter || new showdown.Converter();
+      return converter.makeHtml(str);
+    }
 
 
 append body-end
