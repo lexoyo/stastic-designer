@@ -28,7 +28,14 @@ listAdapters(path.resolve('./adapters/'))
 // serve custom script
 silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))
 
-// serve modified html
+// serve modified html to electron
+// for some reason the following override does not work in electron
+// therefore in ./electron.js we load /stastic.html and we serve index.html at this path
+// wihtout this workaround it serves the original index.html file
+silex.app.use('/stastic.html', serveStatic(path.resolve('./pub/index.html')))
+
+// serve the pub folder
+// this will override the original index.html file served by silex
 silex.app.use('/', serveStatic(path.resolve('./pub')))
 
 // export Silex so that the caller can start Silex with silex.start(() => {})

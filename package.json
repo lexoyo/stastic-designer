@@ -16,9 +16,7 @@
     "build:electron": "electron-rebuild",
     "build:pub": "mkdirp pub/",
     "build:components": "prodotype components/ pub/components",
-    "build:html:electron": "pug client/stastic.pug --out pub/",
-    "build:html:web": "cp pub/stastic.html pub/index.html",
-    "build:html": "run-s build:html:electron build:html:web",
+    "build:html": "pug client/index.pug --out pub/",
     "test:watch": "jest --watch",
     "test": "jest"
   },
