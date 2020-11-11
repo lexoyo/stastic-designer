@@ -84,7 +84,6 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
       const form = container.querySelector('form')
       const data = getAppData(selection)[state.adapter.name]
       Array.from(form.querySelectorAll('[name]')).forEach(el => el.value = '')
-      console.log('xxxxxx', {selection, data, form})
       if (data) {
         Object.entries(data).forEach(([name, value]) => {
           const el = form.querySelector(`[name=${name}]`)
@@ -137,7 +136,6 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
     }, {})
   }
   function updateData(adapter, data) {
-    console.log('updateData', {adapter, data})
     const selection = silex.getSelectedElements()
     const el = selection[0]
     silex.updateElements([{
