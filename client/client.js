@@ -19,8 +19,13 @@ silex.subscribeSite((prev, next) => {
 const editor = document.querySelector('.silex-property-tool .main-container')
 const ui = initUi()
 initListeners(ui, applyFMTemplate, applyTemplate)
-silex.subscribeElements(() => updateForestryApp())
-silex.subscribeUi(() => updateForestryApp())
+silex.subscribeElements(() => updateStasticTab())
+silex.subscribeUi(() => updateStasticTab())
+silex.addDialog({
+    id: 'stastic',
+    type: 'properties',
+    data: { displayName: '&lt;/&gt;' }
+})
 
 function initListeners(allUis, applyFMTemplate, applyTemplate) {
   allUis.fmTemplateInput.onchange = applyFMTemplate 
@@ -105,9 +110,9 @@ function getUiElements(containerEl) {
   }
 }
 
-function updateForestryApp() {
+function updateStasticTab() {
   const selection = silex.getSelectedElements()
-  if(silex.getUi().currentToolbox === 'params') {
+  if(silex.isDialogVisible('stastic', 'properties')) {
     showEditor()
     updateEditor(selection)
   } else {
@@ -184,42 +189,6 @@ function applyTemplate() {
 function applyFMTemplate() {
   const selection = silex.getSelectedElements()
   const el = selection[0]
-  // const template = ui.fmTemplateInput.value
-  // const data = (() => {
-  //   const component = silex.getUi().components[template]
-  //   if(component && component.props.find(p => p.name === 'preview')) {
-  //     // Convert to an existing component
-  //     return {
-  //       ...el.data,
-  //       component: {
-  //         templateName: template,
-  //         data: {
-  //           preview: el.innerHtml,
-  //         }
-  //       },
-  //     }
-  //   }
-  //   // convert to a generic template + forestry
-  //   return {
-  //     ...el.data,
-  //     // data used by the hosting provider to generate forestry FM templates
-  //     forestry: {
-  //       ...el.data.forestry,
-  //       type: ui.fmTemplateInput.value,
-  //       name: el.id,
-  //       label: el.type,
-  //       default: el.innerHtml,
-  //     },
-  //     // data for silex component (+ menu) 
-  //     component: {
-  //       templateName: 'template', // name of the generic template component
-  //       data: {
-  //         template: `{% include '${template}.njk' %}`,
-  //         preview: el.innerHtml,
-  //       }
-  //     },
-  //   }
-  // })()
   const reset = ui.fmTemplateInput.value === ''
   silex.updateElements([{
     ...el,
