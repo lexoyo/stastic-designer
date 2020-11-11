@@ -14,6 +14,31 @@ module.exports = function(unifile) {
           path: context.to.path + '/.forestry/front_matter/templates/' + template.name,
           content: '---\n' + yaml.dump(template),
         }))
+    },
+    getForm() {
+      return `<form>
+        <label for="type">Forestry Front Matter Template</label>
+        <select id="type" name="type">
+          <option value=""></option>
+          <option value="text">Text</option>
+          <option value="textarea">Textarea</option>
+          <option value="number">Number</option>
+          <option value="toggle">Toggle</option>
+          <option value="select">Select</option>
+          <option value="datetime">Datetime</option>
+          <option value="color">Color</option>
+          <option value="tag_list">Tag List</option>
+          <option value="list">List</option>
+          <option value="file">File</option>
+          <option value="image_gallery">Gallery</option>
+        </select>
+        <label>Name</label>
+        <input type="text" name="name"></input>
+        <label>Label</label>
+        <input type="text" name="label"></input>
+        <label>Default Value</label>
+        <input type="text" name="default"></input>
+      </form>`
     }
   }
 }

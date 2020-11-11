@@ -1,4 +1,4 @@
-const {getDefaultPage, replaceLegacyTemplates, insertTemplates} = require('../server/adapter-utils')
+const {getDefaultPage, replaceLegacyTemplates, insertTemplates, getTemplateForm} = require('../server/adapter-utils')
 
 module.exports = function(unifile) {
   return {
@@ -34,6 +34,9 @@ ${action.content.toString('utf-8')}
     },
     getRootUrl: function(context, rootUrl) {
       return '{{ site.url }}{{ site.baseurl }}/'
-    }
+    },
+    getForm: function() {
+      return getTemplateForm()
+    },
   }
 }

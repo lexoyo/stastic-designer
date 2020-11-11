@@ -1,49 +1,20 @@
-// 11ty app
-// load site components
-silex.subscribeSite((prev, next) => {
-  if (next.publicationPath && prev.publicationPath !== next.publicationPath) {
-    const folder = silex.getSite().publicationPath.url
-    silex.loadComponents([
-      './prodotype/components', 
-      './components', 
-      folder + '/.silex/components/',
-    ])
+import {html, render} from './lit-html/lit-html.js'
+import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
+
+(async function() {
+  const propertyTool = document.querySelector('.silex-property-tool .main-container')
+  const container = document.createElement('div')
+  const state = {
+    adapters: [],
+    adapter: null,
   }
-})
-
-// **
-// Dynamic silex app
-// This will add elements to the "parms" tab in Silex
-
-// init 
-const editor = document.querySelector('.silex-property-tool .main-container')
-const ui = initUi()
-initListeners(ui, applyFMTemplate, applyTemplate)
-silex.subscribeElements(() => updateStasticTab())
-silex.subscribeUi(() => updateStasticTab())
-silex.addDialog({
-    id: 'stastic',
-    type: 'properties',
-    data: { displayName: '&lt;/&gt;' }
-})
-
-function initListeners(allUis, applyFMTemplate, applyTemplate) {
-  allUis.fmTemplateInput.onchange = applyFMTemplate 
-  allUis.nameInput.onchange = applyFMTemplate 
-  allUis.labelInput.onchange = applyFMTemplate 
-  allUis.defaultInput.onchange = applyFMTemplate 
-  allUis.beforeInput.onchange = applyTemplate
-  allUis.replaceInput.onchange = applyTemplate
-  allUis.afterInput.onchange = applyTemplate
-}
-function initUi() {
-  const maybeContainer = editor.querySelector('.stastic-property')
-  if(!maybeContainer) {
-    // create the container
-    const containerEl = document.createElement('section')
-    containerEl.classList.add('stastic-property')
+  propertyTool.appendChild(container)
+  // ///////////////////////
+  // UI functions
+  // ///////////////////////
+  function redraw() {
     // create the UI
-    containerEl.innerHTML = `
+    return html`<div class="stastic-property">
       <style>
         .stastic-property .full-width { min-width: 100%; min-height: 100px; }
         .stastic-property .resizable { resize: vertical; }
@@ -57,151 +28,181 @@ function initUi() {
         }
       </style>
  
-      <h1>Templates</h1>
-      <label for="before">Before children</label><br/><br/>
-      <textarea class="full-width resizable" id="before" data-attr-name="before" placeholder="Template to add before the element during publication"></textarea><br/><br/>
-      <label for="replace">Replace children</label><br/><br/>
-      <textarea class="full-width resizable" id="replace" data-attr-name="replace" placeholder="Template to replace the element during publication"></textarea><br/><br/>
-      <label for="after">After children</label><br/><br/>
-      <textarea class="full-width resizable" id="after" data-attr-name="after" placeholder="Template to add after the element during publication"></textarea><br/><br/>
-
-      <h1>CMS Content Type (Forestry)</h1>
-      <label for="type">Forestry Front Matter Template</label>
-      <select id="type" data-attr-name="type">
-        <option value=""></option>
-        <option value="text">Text</option>
-        <option value="textarea">Textarea</option>
-        <option value="number">Number</option>
-        <option value="toggle">Toggle</option>
-        <option value="select">Select</option>
-        <option value="datetime">Datetime</option>
-        <option value="color">Color</option>
-        <option value="tag_list">Tag List</option>
-        <option value="list">List</option>
-        <option value="file">File</option>
-        <option value="image_gallery">Gallery</option>
+      <label for="adapter-select">Adapter</label>
+      <select id="adapter-select" @change=${e => selectAdapter(state.adapters[e.target.selectedIndex-1])}>
+        <option></option>
+        ${state.adapters.map(a => html`
+          <option id="${a.name}" ?selected=${state.adapter && a.name === state.adapter.name}>${a.displayName}</option>
+        `)}
       </select>
-      <label>Name</label>
-      <input type="text" data-attr-name="name"></input>
-      <label>Label</label>
-      <input type="text" data-attr-name="label"></input>
-      <label>Default Value</label>
-      <input type="text" data-attr-name="default"></input>
-    `
-    // add to the dom
-    editor.appendChild(containerEl)
-    // listeners
-    return getUiElements(containerEl)
+      <h2>${state.adapter ? state.adapter.displayName : ''}</h2>
+      <form
+        @keyup=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
+        @blur=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
+        @change=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
+        >
+        ${state.adapter ? unsafeHTML(state.adapter.form) : ''}
+      </form>
+    </div>`
   }
-  return getUiElements(maybeContainer)
-}
 
-function getUiElements(containerEl) {
-  return { 
-    containerEl,
-    fmTemplateInput: containerEl.querySelector('[data-attr-name=type]'),
-    nameInput: containerEl.querySelector('[data-attr-name=name]'),
-    labelInput: containerEl.querySelector('[data-attr-name=label]'),
-    defaultInput: containerEl.querySelector('[data-attr-name=default]'),
-    beforeInput: containerEl.querySelector('[data-attr-name=before]'),
-    replaceInput: containerEl.querySelector('[data-attr-name=replace]'),
-    afterInput: containerEl.querySelector('[data-attr-name=after]'),
-
+  function updateStasticTab() {
+    if(silex.isDialogVisible('stastic', 'properties')) {
+      showEditor()
+      updateEditor()
+    } else {
+      hideEditor()
+    }
   }
-}
 
-function updateStasticTab() {
-  const selection = silex.getSelectedElements()
-  if(silex.isDialogVisible('stastic', 'properties')) {
-    showEditor()
-    updateEditor(selection)
-  } else {
-    hideEditor()
+  function showEditor() {
+    container.style.display = ''
   }
-}
 
-function getAppData(selection) {
-  if (selection && selection[0] && selection[0].data) {
-    return selection[0].data
+  function hideEditor() {
+    container.style.display = 'none'
   }
-  return {}
-}
-
-function updateEditor(selection) {
-  const {forestry, template} = getAppData(selection)
-  if(forestry) {
-    ui.fmTemplateInput.value = forestry.type
-    ui.nameInput.disabled = false
-    ui.nameInput.value = forestry.name
-    ui.labelInput.disabled = false
-    ui.labelInput.value = forestry.label
-    ui.defaultInput.disabled = false
-    ui.defaultInput.value = forestry.default
-  } else {
-    ui.fmTemplateInput.value = ''
-    ui.nameInput.disabled = true
-    ui.nameInput.value = ''
-    ui.labelInput.disabled = true
-    ui.labelInput.value = ''
-    ui.defaultInput.disabled = true
-    ui.defaultInput.value = ''
+  function selectAdapter(selected=null) {
+    state.adapter = selected
+    render(redraw(), container)
+    updateEditor()
   }
-  if(template) {
-    ui.beforeInput.disabled = false
-    ui.beforeInput.value = template.before || ''
-    ui.replaceInput.disabled = false
-    ui.replaceInput.value = template.replace || ''
-    ui.afterInput.disabled = false
-    ui.afterInput.value = template.after || ''
-  } else {
-    ui.beforeInput.value = ''
-    ui.replaceInput.value = ''
-    ui.afterInput.value = ''
+
+  // ///////////////////////
+  // Data functions
+  // ///////////////////////
+  function getAppData(selection) {
+    if (selection && selection[0] && selection[0].data) {
+      return selection[0].data
+    }
+    return {}
   }
-}
 
-function showEditor() {
-  ui.containerEl.style.display = ''
-}
+  function updateEditor(selection) {
+    const selection = silex.getSelectedElements()
+    if (state.adapter) {
+      const form = container.querySelector('form')
+      const data = getAppData(selection)[state.adapter.name]
+      Array.from(form.querySelectorAll('[name]')).forEach(el => el.value = '')
+      console.log('xxxxxx', {selection, data, form})
+      if (data) {
+        Object.entries(data).forEach(([name, value]) => {
+          const el = form.querySelector(`[name=${name}]`)
+          if (el) el.value = value
+          else console.error('Did not find the input with name', name, '(', value, ')')
+        })
+      }
+    }
 
-function hideEditor() {
-  ui.containerEl.style.display = 'none'
-}
+    // if(forestry) {
+    //   ui.fmTemplateInput.value = forestry.type
+    //   ui.nameInput.disabled = false
+    //   ui.nameInput.value = forestry.name
+    //   ui.labelInput.disabled = false
+    //   ui.labelInput.value = forestry.label
+    //   ui.defaultInput.disabled = false
+    //   ui.defaultInput.value = forestry.default
+    // } else {
+    //   ui.fmTemplateInput.value = ''
+    //   ui.nameInput.disabled = true
+    //   ui.nameInput.value = ''
+    //   ui.labelInput.disabled = true
+    //   ui.labelInput.value = ''
+    //   ui.defaultInput.disabled = true
+    //   ui.defaultInput.value = ''
+    // }
+    // if(template) {
+    //   ui.beforeInput.disabled = false
+    //   ui.beforeInput.value = template.before || ''
+    //   ui.replaceInput.disabled = false
+    //   ui.replaceInput.value = template.replace || ''
+    //   ui.afterInput.disabled = false
+    //   ui.afterInput.value = template.after || ''
+    // } else {
+    //   ui.beforeInput.value = ''
+    //   ui.replaceInput.value = ''
+    //   ui.afterInput.value = ''
+    // }
+  }
 
-function applyTemplate() {
-  const selection = silex.getSelectedElements()
-  const el = selection[0]
-  silex.updateElements([{
-    ...el,
-    data: {
-      ...el.data,
-      // data used by the hosting provider to generate templates
-      template: {
-        ...el.data.template,
-        before: ui.beforeInput.value || '',
-        replace: ui.replaceInput.value || '',
-        after: ui.afterInput.value || '',
+  function getDataFromForm(form) {
+    return Array.from(form.elements)
+    .map(el => ({
+      name: el.name,
+      value: el.value,
+    }))
+    .reduce((result, {name, value}) => {
+      result[name] = value
+      return result
+    }, {})
+  }
+  function updateData(adapter, data) {
+    console.log('updateData', {adapter, data})
+    const selection = silex.getSelectedElements()
+    const el = selection[0]
+    silex.updateElements([{
+      ...el,
+      data: {
+        ...el.data,
+        [adapter.name]: {
+          ...el.data[adapter.name],
+          ...data,
+        },
       },
-    },
-  }])
-}
+    }])
+  }
 
-function applyFMTemplate() {
-  const selection = silex.getSelectedElements()
-  const el = selection[0]
-  const reset = ui.fmTemplateInput.value === ''
-  silex.updateElements([{
-    ...el,
-    data: {
-      ...el.data,
-      // data used by the hosting provider to generate forestry FM templates
-      forestry: {
-        ...el.data.forestry,
-        type: reset ? '' : ui.fmTemplateInput.value,
-        name: reset ? '' : ui.nameInput.value || el.id,
-        label: reset ? '' : ui.labelInput.value || el.type + ' ' + el.id,
-        default: reset ? '' : ui.defaultInput.value || el.innerHtml,
-      },
-    },
-  }])
-}
+  // function applyFMTemplate() {
+  //   const selection = silex.getSelectedElements()
+  //   const el = selection[0]
+  //   const reset = ui.fmTemplateInput.value === ''
+  //   silex.updateElements([{
+  //     ...el,
+  //     data: {
+  //       ...el.data,
+  //       // data used by the hosting provider to generate forestry FM templates
+  //       forestry: {
+  //         ...el.data.forestry,
+  //         type: reset ? '' : ui.fmTemplateInput.value,
+  //         name: reset ? '' : ui.nameInput.value || el.id,
+  //         label: reset ? '' : ui.labelInput.value || el.type + ' ' + el.id,
+  //         default: reset ? '' : ui.defaultInput.value || el.innerHtml,
+  //       },
+  //     },
+  //   }])
+  // }
+  // ///////////////////////
+  // Adapters functions
+  // ///////////////////////
+  async function loadAdapters() {
+    const response = await fetch('/adapter/')
+    return response.json()
+  }
+  // ///////////////////////
+  // Start the app
+  // ///////////////////////
+  state.adapters = await loadAdapters()
+  selectAdapter()
+  silex.subscribeElements(() => updateStasticTab())
+  silex.subscribeUi(() => updateStasticTab())
+  silex.addDialog({
+      id: 'stastic',
+      type: 'properties',
+      data: { displayName: '&lt;/&gt;' }
+  })
+  
+  // ///////////////////////
+  // listen to Silex events
+  // ///////////////////////
+  silex.subscribeSite((prev, next) => {
+    if (next.publicationPath && prev.publicationPath !== next.publicationPath) {
+      const folder = silex.getSite().publicationPath.url
+      silex.loadComponents([
+        './prodotype/components', 
+        './components', 
+        folder + '/.silex/components/',
+      ])
+    }
+  })
+})()
+

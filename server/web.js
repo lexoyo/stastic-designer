@@ -1,7 +1,9 @@
 const { SilexServer, Config } = require('silex-website-builder')
-const serveStatic = require('serve-static')
-const path = require('path')
 const isElectron = require('is-electron')
+
+const path = require('path')
+const serveStatic = require('serve-static')
+
 const config = new Config()
 const {listAdapters, createAdapterClass} = require('./adapter-utils')
 
@@ -21,12 +23,27 @@ config.publisherOptions.enableHostingGhPages = false
 const silex = new SilexServer(config)
 
 // add custom services
-listAdapters(path.resolve('./adapters/'))
+const adapters = listAdapters(path.resolve('./adapters/'))
 .map(adapterName => createAdapterClass('../adapters/' + adapterName, silex.unifile))
-.forEach(adapter => silex.publishRouter.addHostingProvider(adapter))
+// adapters
+// .forEach(adapter => {
+//   silex.publishRouter.addHostingProvider(adapter)
+//   if (adapter.getForm) {
+//     silex.app.use('/adapter/' + adapter.getOptions().name + '/form', (req, res) => {
+//       res.send(adapter.getForm())
+//     })
+//   }
+// })
+silex.app.use('/adapter/', (req, res) => {
+  res.json(adapters.map(adapter => ({
+    ...adapter.getOptions(),
+    form: adapter.getForm ? adapter.getForm() : undefined,
+  })))
+})
 
 // serve custom script
 silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))
+silex.app.use('/lit-html/', serveStatic(path.resolve('./node_modules/lit-html/')))
 
 // serve modified html to electron
 // for some reason the following override does not work in electron
@@ -40,4 +57,3 @@ silex.app.use('/', serveStatic(path.resolve('./pub')))
 
 // export Silex so that the caller can start Silex with silex.start(() => {})
 module.exports = silex
-

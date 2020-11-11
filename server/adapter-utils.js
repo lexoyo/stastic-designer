@@ -42,6 +42,16 @@ module.exports = {
     })
   },
   getDefaultPage: (context) => context.data.pages[0].id + '.html',
+  getTemplateForm() {
+    return `<form>
+      <label for="before">Before children</label><br/><br/>
+      <textarea class="full-width resizable" id="before" name="before" placeholder="Template to add before the element during publication"></textarea><br/><br/>
+      <label for="replace">Replace children</label><br/><br/>
+      <textarea class="full-width resizable" id="replace" name="replace" placeholder="Template to replace the element during publication"></textarea><br/><br/>
+      <label for="after">After children</label><br/><br/>
+      <textarea class="full-width resizable" id="after" name="after" placeholder="Template to add after the element during publication"></textarea><br/><br/>
+    </form>`
+  }
 }
 
 function fromAdapter(adapter) {
@@ -53,17 +63,9 @@ function fromAdapter(adapter) {
     return {
       name: adapter.info.name,
       displayName: adapter.info.displayName,
-      pleaseCreateAVhost: '',
-      afterPublishMessage: '',
       isLoggedIn: true,
-      authorizeUrl: null,
-      dashboardUrl: null,
-      pleaseCreateAVhost: null,
-      vhostsUrl: null,
-      buyDomainUrl: null,
       skipVhostSelection: true,
       skipFolderSelection: false,
-      afterPublishMessage: null,
     };
   }
   AdapterClass.prototype.finalizePublication = adapter.finalizePublication ? adapter.finalizePublication : (context, onStatus) => {} // finalizePublication is required
@@ -78,6 +80,7 @@ function fromAdapter(adapter) {
   AdapterClass.prototype.getJsFolder = adapter.getJsFolder
   AdapterClass.prototype.getCssFolder = adapter.getCssFolder
   AdapterClass.prototype.getAssetsFolder = adapter.getAssetsFolder
+  AdapterClass.prototype.getForm = adapter.getForm
   return AdapterClass
 }
 
