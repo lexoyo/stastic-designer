@@ -27,6 +27,7 @@ jobs:
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
       - name: Run tests
         uses: Adzz/yarn_command_action@v1.0.0
+        if: matrix.os == 'linux-latest'
         with:
           command: test
       - name: Build/release Electron app
