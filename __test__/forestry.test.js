@@ -1,5 +1,5 @@
-const forestry = require('./forestry')(null)
-const data = require('../server/sample.json')
+const forestry = require('../adapters/forestry')(null)
+const data = require('./sample.json')
 
 const NUM_PAGES = 2
 const NUM_ADDED_FIELDS = 2 // we add the fields: layout and permalink
