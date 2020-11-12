@@ -11,12 +11,12 @@ module.exports = function(unifile) {
       type: TYPE_CMS,
     },
     beforeWrite: function(context, actions) {
-      return toForestryTemplates(context.data)
+      return actions.concat(toForestryTemplates(context.data)
         .map(template => ({
           name: 'writefile',
           path: context.to.path + '/.forestry/front_matter/templates/' + template.name,
           content: '---\n' + yaml.dump(template),
-        }))
+        })))
     },
     getForm() {
       return `<form>

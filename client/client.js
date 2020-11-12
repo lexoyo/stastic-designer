@@ -32,7 +32,6 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
   // UI functions
   // ///////////////////////
   function redraw(type, {adapters, adapter}) {
-    console.log('redraw', {type, adapter, adapters})
     return html`<div class="stastic-property">
       <style>
         .stastic-property .full-width { min-width: 100%; min-height: 100px; }

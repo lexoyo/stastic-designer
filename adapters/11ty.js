@@ -1,17 +1,19 @@
-const {getDefaultPage, replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+const {getDefaultPage, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+
+const NAME = 'eleventy'
 
 module.exports = function(unifile) {
   return {
     info: {
-      name: 'eleventy',
+      name: NAME,
       displayName: '11ty layouts',
       type: TYPE_TEMPLATE,
     },
     beforeSplit: async function(context, actions) {
-      return insertTemplates(context)
+      return insertTemplates(context, NAME)
     },
     beforeWrite: function(context, actions) {
-      return replaceLegacyTemplates(context, actions)
+      return actions
         .map((action) => {
           if (action.name === 'writefile' && action.path.endsWith('/styles.css')) {
             return {
@@ -29,9 +31,6 @@ ${action.content.toString('utf-8')}
     },
     getDefaultPage: function(context) {
       return getDefaultPage(context)
-    },
-    getHtmlFolder: function(context, defaultFolder) {
-      return '_layouts' // TODO: read from config
     },
     getRootUrl: function(context, rootUrl) {
       return '{{ site.url }}{{ site.baseurl }}/'

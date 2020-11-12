@@ -1,17 +1,19 @@
-const {getDefaultPage, replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+const {getDefaultPageFileName, replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+
+const NAME = 'jekyll'
 
 module.exports = function(unifile) {
   return {
     info: {
-      name: 'jekyll',
+      name: NAME,
       displayName: 'Jekyll layouts',
       type: TYPE_TEMPLATE,
     },
     beforeSplit: async function(context, actions) {
-      return insertTemplates(context, actions)
+      return insertTemplates(context, NAME)
     },
     beforeWrite: function(context, actions) {
-      return replaceLegacyTemplates(context, actions)
+      return actions
         .map((action) => {
           if (action.name === 'writefile' && action.path.endsWith('/styles.css')) {
             return {
@@ -21,12 +23,6 @@ module.exports = function(unifile) {
           }
           return action
         })
-    },
-    getDefaultPage: function(context) {
-      return getDefaultPage(context)
-    },
-    getHtmlFolder: function(context, defaultFolder) {
-      return '_layouts' // TODO: read from config
     },
     getRootUrl: function(context, rootUrl) {
       return '{{ site.url }}{{ site.baseurl }}/'

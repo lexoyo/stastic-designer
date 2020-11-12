@@ -6,6 +6,7 @@ const serveStatic = require('serve-static')
 
 const config = new Config()
 const {listAdapters, createAdapterClass} = require('./adapter-utils')
+const HostingProvider = require('./HostingProvider')
 
 // enable only local file system to store files
 // and github to publish
@@ -15,12 +16,16 @@ config.ceOptions.githubClientId = process.env.GITHUB_CLIENT_ID || 'f124e4148bf9d
 config.ceOptions.githubClientSecret = process.env.GITHUB_CLIENT_SECRET || '1a8fcb93d5d0786eb0a16d81e8c118ce03eefece'
 
 // allow to publish only in a local folder
-config.publisherOptions.skipHostingSelection = false
+config.publisherOptions.skipHostingSelection = true
 config.publisherOptions.enableHostingUnifile = false
 config.publisherOptions.enableHostingGhPages = false
 
 // create the Silex server
 const silex = new SilexServer(config)
+
+// hosting provider for custom publication
+const hostingProvider = new HostingProvider(silex.unifile)
+silex.publishRouter.addHostingProvider(hostingProvider)
 
 // adapters mechanism
 const adapters = listAdapters(path.resolve('./adapters/'))
@@ -28,12 +33,12 @@ const adapters = listAdapters(path.resolve('./adapters/'))
 // add unifile custom services
 adapters
 .forEach(adapter => {
-  silex.publishRouter.addHostingProvider(adapter)
+  hostingProvider.addAdapter(adapter)
 })
 // adapters API
 silex.app.use('/adapter/', (req, res) => {
   res.json(adapters.map(adapter => ({
-    ...adapter.getOptions(),
+    ...adapter.info,
     form: adapter.getForm ? adapter.getForm() : undefined,
   })))
 })
