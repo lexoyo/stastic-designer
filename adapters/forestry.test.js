@@ -1,5 +1,5 @@
-const ForestryPublish = require('./ForestryPublish')
-const data = require('./sample.json')
+const forestry = require('./forestry')(null)
+const data = require('../server/sample.json')
 
 const NUM_PAGES = 2
 const NUM_ADDED_FIELDS = 2 // we add the fields: layout and permalink
@@ -7,10 +7,10 @@ const WITH_FORESTRY_CSS_CLASS = 'with-forestry'
 const NO_FORESTRY_CSS_CLASS = 'no-forestry'
 
 test('Generate forestry template', () => {
-  expect(ForestryPublish.toForestryTemplate).not.toBeNull()
+  expect(forestry.toForestryTemplate).not.toBeNull()
   expect(data).not.toBeNull()
   expect(data.pages).toHaveLength(NUM_PAGES)
-  const forestryTemplates = ForestryPublish.toForestryTemplates(data)
+  const forestryTemplates = forestry.toForestryTemplates(data)
   expect(forestryTemplates).not.toBeNull()
   expect(forestryTemplates).toHaveLength(NUM_PAGES)
 
