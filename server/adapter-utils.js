@@ -1,6 +1,8 @@
 const fs = require('fs')
 
 module.exports = {
+  TYPE_TEMPLATE: 'TYPE_TEMPLATE',
+  TYPE_CMS: 'TYPE_CMS',
   listAdapters: (path) => {
     return fs.readdirSync(path)
   },
@@ -61,11 +63,10 @@ function fromAdapter(adapter) {
   // prevent page name added to page title (the page name here is a layout name)
   AdapterClass.prototype.getOptions = function(session) {
     return {
-      name: adapter.info.name,
-      displayName: adapter.info.displayName,
       isLoggedIn: true,
       skipVhostSelection: true,
       skipFolderSelection: false,
+      ...adapter.info,
     };
   }
   AdapterClass.prototype.finalizePublication = adapter.finalizePublication ? adapter.finalizePublication : (context, onStatus) => {} // finalizePublication is required

@@ -1,10 +1,11 @@
-const {getDefaultPage, replaceLegacyTemplates, insertTemplates, getTemplateForm} = require('../server/adapter-utils')
+const {getDefaultPage, replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
 
 module.exports = function(unifile) {
   return {
     info: {
       name: 'eleventy',
       displayName: '11ty layouts',
+      type: TYPE_TEMPLATE,
     },
     beforeSplit: async function(context, actions) {
       return insertTemplates(context)

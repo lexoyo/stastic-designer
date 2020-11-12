@@ -1,11 +1,14 @@
 const {Api} = require('silex-website-builder')
 const yaml = require('js-yaml')
 
+const {TYPE_CMS} = require('../server/adapter-utils')
+
 module.exports = function(unifile) {
   return {
     info: {
       name: 'forestry',
       displayName: 'Forestry',
+      type: TYPE_CMS,
     },
     beforeWrite: function(context, actions) {
       return toForestryTemplates(context.data)

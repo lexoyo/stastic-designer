@@ -22,18 +22,15 @@ config.publisherOptions.enableHostingGhPages = false
 // create the Silex server
 const silex = new SilexServer(config)
 
-// add custom services
+// adapters mechanism
 const adapters = listAdapters(path.resolve('./adapters/'))
 .map(adapterName => createAdapterClass('../adapters/' + adapterName, silex.unifile))
-// adapters
-// .forEach(adapter => {
-//   silex.publishRouter.addHostingProvider(adapter)
-//   if (adapter.getForm) {
-//     silex.app.use('/adapter/' + adapter.getOptions().name + '/form', (req, res) => {
-//       res.send(adapter.getForm())
-//     })
-//   }
-// })
+// add unifile custom services
+adapters
+.forEach(adapter => {
+  silex.publishRouter.addHostingProvider(adapter)
+})
+// adapters API
 silex.app.use('/adapter/', (req, res) => {
   res.json(adapters.map(adapter => ({
     ...adapter.getOptions(),

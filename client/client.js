@@ -2,18 +2,37 @@ import {html, render} from './lit-html/lit-html.js'
 import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
 
 (async function() {
+  // constants
+  const TYPE_CMS = 'TYPE_CMS'
+  const TYPE_TEMPLATE = 'TYPE_TEMPLATE'
+
+  // global properties
   const propertyTool = document.querySelector('.silex-property-tool .main-container')
-  const container = document.createElement('div')
-  const state = {
-    adapters: [],
-    adapter: null,
+  const container = {
+    parent: document.createElement('div'),
+    [TYPE_TEMPLATE]: document.createElement('div'),
+    [TYPE_CMS]: document.createElement('div'),
   }
-  propertyTool.appendChild(container)
+  container.parent.appendChild(container[TYPE_TEMPLATE])
+  container.parent.appendChild(container[TYPE_CMS])
+
+  const state = {
+    [TYPE_TEMPLATE]: {
+      adapters: [],
+      adapter: null,
+    },
+    [TYPE_CMS]: {
+      adapters: [],
+      adapter: null,
+    },
+  }
+  propertyTool.appendChild(container.parent)
+
   // ///////////////////////
   // UI functions
   // ///////////////////////
-  function redraw() {
-    // create the UI
+  function redraw(type, {adapters, adapter}) {
+    console.log('redraw', {type, adapter, adapters})
     return html`<div class="stastic-property">
       <style>
         .stastic-property .full-width { min-width: 100%; min-height: 100px; }
@@ -29,43 +48,64 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
       </style>
  
       <label for="adapter-select">Adapter</label>
-      <select id="adapter-select" @change=${e => selectAdapter(state.adapters[e.target.selectedIndex-1])}>
-        <option></option>
-        ${state.adapters.map(a => html`
-          <option id="${a.name}" ?selected=${state.adapter && a.name === state.adapter.name}>${a.displayName}</option>
+      <select id="adapter-select" @change=${e => selectAdapter(type, adapters[e.target.selectedIndex-1])}>
+        <option ?selected=${!adapter}></option>
+        ${adapters.map(a => html`
+          <option id="${a.name}" ?selected=${adapter && a.name === adapter.name}>${a.displayName}</option>
         `)}
       </select>
-      <h2>${state.adapter ? state.adapter.displayName : ''}</h2>
+      <h2>${adapter ? adapter.displayName : ''}</h2>
       <form
-        @keyup=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
-        @blur=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
-        @change=${e => updateData(state.adapter, getDataFromForm(e.target.form))}
+        @keyup=${e => updateData(adapter, getDataFromForm(e.target.form))}
+        @blur=${e => updateData(adapter, getDataFromForm(e.target.form))}
+        @change=${e => updateData(adapter, getDataFromForm(e.target.form))}
         >
-        ${state.adapter ? unsafeHTML(state.adapter.form) : ''}
+        ${adapter ? unsafeHTML(adapter.form) : ''}
       </form>
     </div>`
   }
 
   function updateStasticTab() {
-    if(silex.isDialogVisible('stastic', 'properties')) {
-      showEditor()
-      updateEditor()
-    } else {
-      hideEditor()
+    ;[TYPE_TEMPLATE, TYPE_CMS]
+      .forEach(type => {
+        if(silex.isDialogVisible(type, 'properties')) {
+          showEditor(type)
+          updateEditor(type)
+        } else {
+          hideEditor(type)
+        }
+      })
+  }
+
+  function showEditor(type) {
+    container[type].style.display = ''
+  }
+
+  function hideEditor(type) {
+    container[type].style.display = 'none'
+  }
+  function selectAdapter(type, selected=null) {
+    state[type].adapter = selected
+    render(redraw(
+      type,
+      state[type],
+    ), container[type])
+    updateEditor(type)
+    const site = silex.getSite()
+    if (!site.data.stastic ||
+      (site.data.stastic[type] !== selected && // case of null === null
+        site.data.stastic[type] !== (selected || {}).name)) {
+      silex.updateSite({
+        ...site,
+        data: {
+          ...site.data,
+          stastic: {
+            ...site.data.stastic,
+            [type]: selected ? selected.name : null,
+          },
+        },
+      })
     }
-  }
-
-  function showEditor() {
-    container.style.display = ''
-  }
-
-  function hideEditor() {
-    container.style.display = 'none'
-  }
-  function selectAdapter(selected=null) {
-    state.adapter = selected
-    render(redraw(), container)
-    updateEditor()
   }
 
   // ///////////////////////
@@ -78,11 +118,11 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
     return {}
   }
 
-  function updateEditor(selection) {
+  function updateEditor(type) {
     const selection = silex.getSelectedElements()
-    if (state.adapter) {
-      const form = container.querySelector('form')
-      const data = getAppData(selection)[state.adapter.name]
+    if (state[type].adapter) {
+      const form = container[type].querySelector('form')
+      const data = getAppData(selection)[state[type].adapter.name]
       Array.from(form.querySelectorAll('[name]')).forEach(el => el.value = '')
       if (data) {
         Object.entries(data).forEach(([name, value]) => {
@@ -92,36 +132,6 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
         })
       }
     }
-
-    // if(forestry) {
-    //   ui.fmTemplateInput.value = forestry.type
-    //   ui.nameInput.disabled = false
-    //   ui.nameInput.value = forestry.name
-    //   ui.labelInput.disabled = false
-    //   ui.labelInput.value = forestry.label
-    //   ui.defaultInput.disabled = false
-    //   ui.defaultInput.value = forestry.default
-    // } else {
-    //   ui.fmTemplateInput.value = ''
-    //   ui.nameInput.disabled = true
-    //   ui.nameInput.value = ''
-    //   ui.labelInput.disabled = true
-    //   ui.labelInput.value = ''
-    //   ui.defaultInput.disabled = true
-    //   ui.defaultInput.value = ''
-    // }
-    // if(template) {
-    //   ui.beforeInput.disabled = false
-    //   ui.beforeInput.value = template.before || ''
-    //   ui.replaceInput.disabled = false
-    //   ui.replaceInput.value = template.replace || ''
-    //   ui.afterInput.disabled = false
-    //   ui.afterInput.value = template.after || ''
-    // } else {
-    //   ui.beforeInput.value = ''
-    //   ui.replaceInput.value = ''
-    //   ui.afterInput.value = ''
-    // }
   }
 
   function getDataFromForm(form) {
@@ -150,25 +160,6 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
     }])
   }
 
-  // function applyFMTemplate() {
-  //   const selection = silex.getSelectedElements()
-  //   const el = selection[0]
-  //   const reset = ui.fmTemplateInput.value === ''
-  //   silex.updateElements([{
-  //     ...el,
-  //     data: {
-  //       ...el.data,
-  //       // data used by the hosting provider to generate forestry FM templates
-  //       forestry: {
-  //         ...el.data.forestry,
-  //         type: reset ? '' : ui.fmTemplateInput.value,
-  //         name: reset ? '' : ui.nameInput.value || el.id,
-  //         label: reset ? '' : ui.labelInput.value || el.type + ' ' + el.id,
-  //         default: reset ? '' : ui.defaultInput.value || el.innerHtml,
-  //       },
-  //     },
-  //   }])
-  // }
   // ///////////////////////
   // Adapters functions
   // ///////////////////////
@@ -179,20 +170,29 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
   // ///////////////////////
   // Start the app
   // ///////////////////////
-  state.adapters = await loadAdapters()
-  selectAdapter()
+  const adapters = await loadAdapters()
+  ;[TYPE_TEMPLATE, TYPE_CMS]
+  .forEach(type => {
+    state[type].adapters = adapters.filter(a => a.type === type)
+  })
   silex.subscribeElements(() => updateStasticTab())
   silex.subscribeUi(() => updateStasticTab())
   silex.addDialog({
-      id: 'stastic',
+      id: TYPE_TEMPLATE,
       type: 'properties',
       data: { displayName: '&lt;/&gt;' }
   })
-  
+  silex.addDialog({
+      id: TYPE_CMS,
+      type: 'properties',
+      data: { displayName: 'CMS' }
+  })
+    
   // ///////////////////////
   // listen to Silex events
   // ///////////////////////
   silex.subscribeSite((prev, next) => {
+    // load custom components
     if (next.publicationPath && prev.publicationPath !== next.publicationPath) {
       const folder = silex.getSite().publicationPath.url
       silex.loadComponents([
@@ -201,6 +201,13 @@ import {unsafeHTML} from './lit-html/directives/unsafe-html.js'
         folder + '/.silex/components/',
       ])
     }
+    // select adapters
+    const data = silex.getSite().data.stastic
+    ;[TYPE_TEMPLATE, TYPE_CMS]
+      .forEach(type => {
+        const adapter = data ? state[type].adapters.find(a => a.name === data[type]) : null
+        selectAdapter(type, adapter)
+      })
   })
 })()
 
