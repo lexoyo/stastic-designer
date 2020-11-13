@@ -44,6 +44,7 @@
   },
   "homepage": "https://www.silex.me",
   "dependencies": {
+    "deep-equal": "^2.0.4",
     "is-electron": "^2.2.0",
     "js-yaml": "^3.14.0",
     "lit-html": "^1.3.0",

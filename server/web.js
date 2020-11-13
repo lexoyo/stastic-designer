@@ -44,7 +44,7 @@ silex.app.use('/adapter/', (req, res) => {
 })
 
 // serve custom script
-silex.app.use('/client.js', serveStatic(path.resolve('./client/client.js')))
+silex.app.use('/js/', serveStatic(path.resolve('./client/js/')))
 silex.app.use('/lit-html/', serveStatic(path.resolve('./node_modules/lit-html/')))
 
 // serve modified html to electron
