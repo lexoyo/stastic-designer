@@ -4,7 +4,6 @@ import {unsafeHTML} from '../lit-html/directives/unsafe-html.js'
 import { updateData, getDataFromForm, selectAdapter, updateEditor } from './adapters.js'
 
 export function redraw(type, {adapters, adapter}) {
-  console.log('redraw', {type, adapters, adapter})
   return html`<div class="stastic-property">
     <style>
       .stastic-property .full-width { min-width: 100%; min-height: 100px; }

@@ -32,12 +32,12 @@ export function selectAdapter(type, selected=null) {
   }
 }
 
-
+// update the form UI with fresh data
 export function updateEditor(type) {
-  const selection = silex.getSelectedElements()
   if (state[type].adapter) {
     const form = container[type].querySelector('form')
-    const data = getAppData(selection)[state[type].adapter.name]
+    const data = getAppData(silex.getSelectedElements())[state[type].adapter.name]
+    console.log('updateEditor', {type, form, data})
     Array.from(form.querySelectorAll('[name]'))
       .forEach(el => el.setAttribute('data-selection-start', el.selectionStart))
     Array.from(form.querySelectorAll('[name]'))
@@ -56,6 +56,7 @@ export function updateEditor(type) {
 }
 
 export function getAppData(selection) {
+  console.log('getAppData', selection)
   if (selection && selection[0] && selection[0].data) {
     return selection[0].data
   }
@@ -63,6 +64,7 @@ export function getAppData(selection) {
 }
 
 export function getDataFromForm(form) {
+  console.log('getDataFromForm', {form}, form.elements)
   return Array.from(form.elements)
   .map(el => ({
     name: el.name,
@@ -73,9 +75,12 @@ export function getDataFromForm(form) {
     return result
   }, {})
 }
+
+// update the selected element with data from the UI
 export function updateData(adapter, data) {
   const selection = silex.getSelectedElements()
   const el = selection[0]
+  console.log('updateData', data)
   if (!deepEqual(data, el.data[adapter.name])) {
     silex.updateElements([{
       ...el,
