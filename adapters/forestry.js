@@ -7,7 +7,7 @@ const mapTextAreas = field => field.type === 'textarea' ? {
   ...field,
   config: {
     wysiwyg: true,
-    schema: { format: 'html' },
+    schema: { format: 'html-blocks' },
   },
 } : field
 const filterVisible = (data, page) => el => !Api.isBody(el, data.elements) &&
