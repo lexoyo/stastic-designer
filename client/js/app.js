@@ -1,8 +1,10 @@
 import { TYPE_CMS, TYPE_TEMPLATE, container, state } from './globals.js'
 import { loadAdapters, selectAdapter } from './adapters.js'
 import { updateStasticTab } from './ui.js'
+import { login, logout } from './auth.js'
 
 const propertyTool = document.querySelector('.silex-property-tool .main-container')
+const logoutBtn = document.querySelector('#logout')
 
 // ///////////////////////
 // Start the app
@@ -51,5 +53,15 @@ async function start() {
         selectAdapter(type, adapter)
       })
   })
+  /////////////////////
+  // auth
+  /////////////////////
+  login().then(async user => {
+    console.log('ok', {user})
+  })
+  .catch(e => {
+    console.error('error', {e})
+  })
+  logoutBtn.onclick = () => logout()
 }
 start()

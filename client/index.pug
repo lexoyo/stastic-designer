@@ -2,11 +2,12 @@ extends ../node_modules/silex-website-builder/src/html/index.jade
 
 append head-start
   script(async, src="https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js")
+  script(src='https://cdn.auth0.com/js/auth0-spa-js/1.9/auth0-spa-js.production.js')
   script.
-    let converter;
+    let converter
     function makeHtml(str) {
-      converter = converter || new showdown.Converter();
-      return converter.makeHtml(str);
+      converter = converter || new showdown.Converter()
+      return converter.makeHtml(str)
     }
 
 append silex-options
@@ -15,3 +16,23 @@ append silex-options
 
 append silex-start
   script(type='text/javascript' src='js/index.js')
+
+  div.auth
+    button#logout Log out
+    style.
+      .auth {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999999999;
+        background: white;
+      }
+      .hidden {
+        display: none;
+      }
+
+      label {
+        margin-bottom: 10px;
+        display: block;
+      }
+

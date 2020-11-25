@@ -46,6 +46,7 @@ silex.app.use('/adapter/', (req, res) => {
 // serve custom script
 silex.app.use('/js/', serveStatic(path.resolve('./client/js/')))
 silex.app.use('/lit-html/', serveStatic(path.resolve('./node_modules/lit-html/')))
+//silex.app.use('/auth0/', serveStatic(path.resolve('./node_modules/@auth0/auth0-spa-js/dist/')))
 
 // serve modified html to electron
 // for some reason the following override does not work in electron
