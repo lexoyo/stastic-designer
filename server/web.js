@@ -48,14 +48,18 @@ silex.app.use('/js/', serveStatic(path.resolve('./client/js/')))
 silex.app.use('/lit-html/', serveStatic(path.resolve('./node_modules/lit-html/')))
 
 // serve modified html to electron
-// for some reason the following override does not work in electron
+// for some reason serving the whole folder does not override index.html in electron
 // therefore in ./electron.js we load /stastic.html and we serve index.html at this path
 // wihtout this workaround it serves the original index.html file
 silex.app.use('/stastic.html', serveStatic(path.resolve('./pub/index.html')))
 
 // serve the pub folder
 // this will override the original index.html file served by silex
+// this is only useful in the web version, not in electron
 silex.app.use('/', serveStatic(path.resolve('./pub')))
+
+// serve the static assets
+silex.app.use('/static', serveStatic(path.resolve('./static')))
 
 // export Silex so that the caller can start Silex with silex.start(() => {})
 module.exports = silex

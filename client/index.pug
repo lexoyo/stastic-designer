@@ -3,7 +3,7 @@ extends ../node_modules/silex-website-builder/src/html/index.jade
 block customizable-head
   title='Stastic designer'
   meta(name='description', content='Stastic designer | template editor based on Silex website builder')
-  link(rel="shortcut icon", href="stastic-logo-small.png")
+  link(rel="shortcut icon", href="static/stastic-logo-small.png")
 
 append head-start
   // legacy dependency of Stastic
@@ -24,7 +24,7 @@ append silex-start
 
 block dashboard-header
   .header
-    img.silex-logo-small(src='stastic-logo-small.png')
+    img.silex-logo-small(src='static/stastic-logo-small.png')
     h1.title
       | Stastic Dashboard
     button.close-btn(type="button")
@@ -33,7 +33,7 @@ block dashboard-header
       span.label Help
 
 block menu-logo
-  img.show-about-menu.silex-logo(title='About Stastic', data-menu-action='show.about.menu', src='stastic-logo-small.png')
+  img.show-about-menu.silex-logo(title='About Stastic', data-menu-action='show.about.menu', src='static/stastic-logo-small.png')
 
 block dashboard-adunit
 
