@@ -1,6 +1,12 @@
 extends ../node_modules/silex-website-builder/src/html/index.jade
 
+block customizable-head
+  title='Stastic designer'
+  meta(name='description', content='Stastic designer | template editor based on Silex website builder')
+  link(rel="shortcut icon", href="stastic-logo-small.png")
+
 append head-start
+  // legacy dependency of Stastic
   script(async, src="https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js")
   script.
     let converter;
@@ -15,3 +21,19 @@ append silex-options
 
 append silex-start
   script(type='text/javascript' src='js/index.js')
+
+block dashboard-header
+  .header
+    img.silex-logo-small(src='stastic-logo-small.png')
+    h1.title
+      | Stastic Dashboard
+    button.close-btn(type="button")
+    a.help-btn(href="https://github.com/silexlabs/Silex/wiki/Editor-UI#dashboard", target="_blank", title="About Silex Dashboard")
+      span.icon.fa.fa-inverse.fa-info-circle
+      span.label Help
+
+block menu-logo
+  img.show-about-menu.silex-logo(title='About Stastic', data-menu-action='show.about.menu', src='stastic-logo-small.png')
+
+block dashboard-adunit
+
