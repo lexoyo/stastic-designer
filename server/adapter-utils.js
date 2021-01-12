@@ -13,6 +13,7 @@ module.exports = {
   insertTemplates: async (context, adapterName) => {
     context.data.elements
       .filter(el => !!el.data[adapterName])
+      .filter(el => !!context.document.querySelector('.' + el.id))
       .forEach(el => {
         const doc = context.document
 

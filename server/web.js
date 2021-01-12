@@ -28,8 +28,8 @@ const hostingProvider = new HostingProvider(silex.unifile)
 silex.publishRouter.addHostingProvider(hostingProvider)
 
 // adapters mechanism
-const adapters = listAdapters(path.resolve('./adapters/'))
-.map(adapterName => createAdapterClass('../adapters/' + adapterName, silex.unifile))
+const adapters = listAdapters(path.resolve(__dirname, '..', 'adapters'))
+.map(adapterName => createAdapterClass(path.resolve(__dirname, '..', 'adapters', adapterName), silex.unifile))
 // add unifile custom services
 adapters
 .forEach(adapter => {
@@ -44,22 +44,22 @@ silex.app.use('/adapter/', (req, res) => {
 })
 
 // serve custom script
-silex.app.use('/js/', serveStatic(path.resolve('./client/js/')))
-silex.app.use('/lit-html/', serveStatic(path.resolve('./node_modules/lit-html/')))
+silex.app.use('/js/', serveStatic(path.resolve(__dirname, '..', 'client', 'js')))
+silex.app.use('/lit-html/', serveStatic(path.resolve(__dirname, '..', 'node_modules', 'lit-html')))
 
 // serve modified html to electron
 // for some reason serving the whole folder does not override index.html in electron
 // therefore in ./electron.js we load /stastic.html and we serve index.html at this path
 // wihtout this workaround it serves the original index.html file
-silex.app.use('/stastic.html', serveStatic(path.resolve('./pub/index.html')))
+silex.app.use('/stastic.html', serveStatic(path.resolve(__dirname, '..', 'pub', 'index.html')))
 
 // serve the pub folder
 // this will override the original index.html file served by silex
 // this is only useful in the web version, not in electron
-silex.app.use('/', serveStatic(path.resolve('./pub')))
+silex.app.use('/', serveStatic(path.resolve(__dirname, '..', 'pub')))
 
 // serve the static assets
-silex.app.use('/static', serveStatic(path.resolve('./static')))
+silex.app.use('/static', serveStatic(path.resolve(__dirname, '..', 'static')))
 
 // export Silex so that the caller can start Silex with silex.start(() => {})
 module.exports = silex
