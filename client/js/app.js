@@ -36,11 +36,11 @@ async function start() {
   silex.subscribeSite((prev, next) => {
     // load custom components
     if (next.publicationPath && prev.publicationPath !== next.publicationPath) {
-      const folder = silex.getSite().publicationPath.url
+      const path = silex.getSite().file.url.split('/').slice(0, -1).join('/')
       silex.loadComponents([
         './prodotype/components', 
         './components', 
-        folder + '/.silex/components/',
+        path + '/components', 
       ])
     }
     // select adapters

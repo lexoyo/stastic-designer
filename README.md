@@ -35,6 +35,14 @@ Select elements which you want to come from the CMS and make them "templates"
 
 Publish the website to a folder containing a Jekyll or 11ty website, on github or on you local computer
 
+### Developer
+
+Look for custom components and Prodotype in Silex docs.
+
+You can add custom components to a site, in a `components` folder beside the site HTML editable file.
+
+You can add custom components to a Stastic instance, simply add them to the `components` folder in this repo.
+
 ## Local Development
 
 If you want to work on your local hard drive, enable the `fs` service and start Silex like this:
