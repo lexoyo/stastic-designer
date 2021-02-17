@@ -10,6 +10,13 @@ const mapTextAreas = field => field.type === 'textarea' ? {
     schema: { format: 'html-blocks' },
   },
 } : field
+
+const mapColor = field => field.type === 'color' ? {
+  ...field,
+  config: {
+    color_format: 'Hex',
+  },
+} : field
 const filterVisible = (data, page) => el => !Api.isBody(el, data.elements) &&
   (el.pageNames.length === 0 || el.pageNames.includes(page.id)) &&
   (!Api.getFirstPagedParent(el, data.elements) ||
@@ -80,7 +87,8 @@ module.exports = function(unifile) {
                     .filter(filterVisible(data, page))
                     .filter(child => !!child.data.forestry)
                     .map(child => child.data.forestry)
-                    .map(mapTextAreas),
+                    .map(mapTextAreas)
+                    .map(mapColor),
                 }
               }
             }
@@ -93,6 +101,7 @@ module.exports = function(unifile) {
         .map(el => el.data.forestry)
         // handle special config of forestry fields
         .map(mapTextAreas)
+        .map(mapColor)
       }))
       // add name
       .map(page => ({
