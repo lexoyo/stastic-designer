@@ -23,6 +23,8 @@ const filterVisible = (data, page) => el => !Api.isBody(el, data.elements) &&
     Api.getFirstPagedParent(el, data.elements).pageNames.includes(page.id)
   )
 
+const CONTAINERS_TYPES = ['field_group_list', 'field_group']
+
 module.exports = function(unifile) {
   return {
     info: {
@@ -46,10 +48,11 @@ module.exports = function(unifile) {
           <option value="text">Text</option>
           <option value="textarea">Textarea</option>
           <option value="number">Number</option>
-          <option value="toggle">Toggle</option>
+          <option value="boolean">Toggle</option>
           <option value="select">Select</option>
           <option value="datetime">Datetime</option>
           <option value="color">Color</option>
+          <option value="field_group">Group</option>
           <option value="tag_list">Tag List</option>
           <option value="list">List of Strings</option>
           <option value="field_group_list">List of Items</option>
@@ -75,7 +78,7 @@ module.exports = function(unifile) {
         .filter(el => !!el.data.forestry && !!el.data.forestry.type)
         // handle lists of object
         .map(el => {
-          if (el.data.forestry.type === 'field_group_list') {
+          if (CONTAINERS_TYPES.includes(el.data.forestry.type)) {
             return {
               ...el,
               data: {
@@ -96,7 +99,7 @@ module.exports = function(unifile) {
           return el
         })
         // remove all elements which are in a list
-        .filter(el => !Api.getAllParents(el, data.elements).find(parent => parent.data.forestry && parent.data.forestry.type === 'field_group_list'))
+        .filter(el => !Api.getAllParents(el, data.elements).find(parent => parent.data.forestry && CONTAINERS_TYPES.includes(parent.data.forestry.type)))
         // from el to forestry data
         .map(el => el.data.forestry)
         // handle special config of forestry fields
