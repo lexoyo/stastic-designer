@@ -40,14 +40,24 @@ export function updateEditor(type) {
     Array.from(form.querySelectorAll('[name]'))
       .forEach(el => el.setAttribute('data-selection-start', el.selectionStart))
     Array.from(form.querySelectorAll('[name]'))
-      .forEach(el => el.value = '')
+      .forEach(el => {
+        el.value = ''
+        el.checked = false
+      })
     if (data) {
       Object.entries(data).forEach(([name, value]) => {
         const el = form.querySelector(`[name=${name}]`)
         if (el) {
-          el.value = value
-          const carret = parseInt(el.getAttribute('data-selection-start'))
-          el.selectionStart = el.selectionEnd = carret
+          if (typeof value === 'boolean') el.checked = value
+          else {
+            el.value = value
+            el.checked = false
+          }
+          if (el.selectionStart !== null) {
+            // for text inputs
+            const carret = parseInt(el.getAttribute('data-selection-start'))
+            el.selectionStart = el.selectionEnd = carret
+          }
         } else console.error('Did not find the input with name', name, '(', value, ')')
       })
     }
@@ -65,7 +75,7 @@ export function getDataFromForm(form) {
   return Array.from(form.elements)
   .map(el => ({
     name: el.name,
-    value: el.value,
+    value: el.checked || el.value,
   }))
   .reduce((result, {name, value}) => {
     result[name] = value

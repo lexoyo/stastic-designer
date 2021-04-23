@@ -9,7 +9,7 @@ module.exports = class HostingProvider {
     this.adapters = this.adapters.concat(adapter)
   }
   getAdapterName(context, type) {
-    return (context.data.site.data.stastic || {})[type]
+    return (context.data && context.data.site && context.data.site.data && context.data.site.data.stastic || {})[type]
   }
   getAdapter(type, name) {
     const adapter = this.adapters.find(a => a.info.type === type && a.info.name === name)
@@ -76,8 +76,13 @@ module.exports = class HostingProvider {
     if (cms && cms.getDefaultPageFileName) return cms.getDefaultPageFileName(context, data)
     return context.data.pages[0].id + '.html'
   }
-  getHtmlFolder() {
-    return '_layouts' // TODO: add context in Silex to this hook
+  getHtmlFolder(context, defaultFolder) {
+    return [TYPE_TEMPLATE, TYPE_CMS]
+      .reduce((defaultVal, type) => {
+        const adapterName = this.getAdapterName(context, type)
+        const adapter = this.getAdapter(type, adapterName)
+        return adapter && adapter.getHtmlFolder ? adapter.getHtmlFolder() : defaultVal
+      }, '_layouts')
   }
   getRootUrl(context, baseUrl) {
     const {template, cms} = this.getAdaptersFromContext(context)
