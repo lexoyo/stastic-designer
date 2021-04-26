@@ -1,4 +1,4 @@
-const {getDefaultPageFileName, replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+const {replaceLegacyTemplates, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
 
 const NAME = 'jekyll'
 

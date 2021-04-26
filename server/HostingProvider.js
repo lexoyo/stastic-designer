@@ -34,6 +34,9 @@ module.exports = class HostingProvider {
   finalizePublication(context, onStatus) {
   }
   getPageTitle(defaultTitle, context) {
+    const {template, cms} = this.getAdaptersFromContext(context)
+    if (template && template.getPageTitle) return template.getPageTitle(context, defaultTitle)
+    if (cms && cms.getPageTitle) return cms.getPageTitle(context, defaultTitle)
     return defaultTitle
   }
   async beforeSplit(context, actions) {

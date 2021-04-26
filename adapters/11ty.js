@@ -1,4 +1,4 @@
-const {getDefaultPage, insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
+const {insertTemplates, getTemplateForm, TYPE_TEMPLATE} = require('../server/adapter-utils')
 
 const NAME = 'eleventy'
 
@@ -28,9 +28,6 @@ ${action.content.toString('utf-8')}
           }
           return action
         })
-    },
-    getDefaultPage: function(context) {
-      return getDefaultPage(context)
     },
     getRootUrl: function(context, rootUrl) {
       return '{{ site.url }}{{ site.baseurl }}/'

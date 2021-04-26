@@ -26,12 +26,9 @@ module.exports = function(unifile) {
           }
         })
       // Pardot templates
-      const titleEl = context.document.head.querySelector('title') || context.document.createElement('title')
-      titleEl.innerText = '%%title%%'
-      context.document.head.appendChild(titleEl)
       const descEl = context.document.head.querySelector('meta[content=\'description\']') || context.document.createElement('meta')
-      descEl.content = 'description'
-      descEl.innerText = '%%description%%'
+      descEl.name = 'description'
+      descEl.content = '%%description%%'
       context.document.head.appendChild(descEl)
       context.data.elements
         .filter(el => !!el.data['pardot'])
@@ -43,13 +40,16 @@ module.exports = function(unifile) {
           chosenEl.innerHTML = '%%content%%'
         })
     },
-    getHtmlFolder() {
+    getPageTitle: function(context, defaultTitle) {
+      return '%%title%%'
+    },
+    getHtmlFolder: function() {
       return null
     },
-    getDefaultPage: function(context) {
-      return getDefaultPage(context)
+    getDefaultPageFileName: function(context) {
+      return 'index.html'
     },
-    getForm() {
+    getForm: function() {
       return `
         <div style="
           display: flex;
