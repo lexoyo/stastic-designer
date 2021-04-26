@@ -27,6 +27,10 @@ export function redraw(type, {adapters, adapter}) {
     </select>
     <h2>${adapter ? adapter.displayName : ''}</h2>
     <form
+      style="
+        display: flex;
+        flex-direction: column;
+      "
       @keyup=${e => updateData(adapter, getDataFromForm(e.target.form))}
       @blur=${e => updateData(adapter, getDataFromForm(e.target.form))}
       @change=${e => updateData(adapter, getDataFromForm(e.target.form))}

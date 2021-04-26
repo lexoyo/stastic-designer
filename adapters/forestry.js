@@ -41,7 +41,7 @@ module.exports = function(unifile) {
         })))
     },
     getForm() {
-      return `<form>
+      return `
         <label for="type">Forestry Front Matter Template</label>
         <select id="type" name="type">
           <option value=""></option>
@@ -65,7 +65,7 @@ module.exports = function(unifile) {
         <input type="text" name="label"></input>
         <label>Default Value</label>
         <input type="text" name="default"></input>
-      </form>`
+      `
     },
     toForestryTemplates: function(data) {
       return data.pages.map(page => ({
