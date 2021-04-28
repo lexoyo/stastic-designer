@@ -16,13 +16,16 @@ module.exports = function(unifile) {
         .filter(el => el.type !== 'section-element')
         .filter(el => !!context.document.querySelector('.' + el.id))
         .forEach(el => {
-          const {editable, regionName} = el.data['pardot']
-          if (editable && regionName) {
+          const {regionName} = el.data['pardot']
+          if (regionName) {
             const domEl = context.document.querySelector('.' + el.id)
             const contentEl = domEl.querySelector('.silex-element-content, img')
             const chosenEl = contentEl || domEl
             if (!PARDOT_EDITABLE_TAGS.includes(chosenEl.tagName.toLowerCase())) throw new Error(`The tag name ${chosenEl.tagName} is not supported by pardot. The element ${el.id} should not be editable`)
             chosenEl.setAttribute('pardot-region', regionName)
+            if (chosenEl.tagName.toLowerCase() === 'img') {
+              chosenEl.setAttribute('pardot-region-type', 'image')
+            }
           }
         })
       // Pardot templates
@@ -51,16 +54,6 @@ module.exports = function(unifile) {
     },
     getForm: function() {
       return `
-        <div style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          margin: 10px;
-        ">
-          <label for="editable">Is editable (pardot-region)</label>
-          <input type="checkbox" id="editable" name="editable"></input>
-        </div>
         <label for="regionName">Editable Region Name</label>
         <input type="text" id="regionName" name="regionName"></input>
         <hr />
@@ -71,8 +64,8 @@ module.exports = function(unifile) {
           align-items: center;
           margin: 10px;
         ">
-          <label for="content">Is this <strong>Pardot content container</strong>?&nbsp<small>1 per page, will be replaced by pardot form or content, this is the %%content%% template</label>
           <input type="checkbox" id="content" name="content"></input>
+          <label for="content">Is this <strong>Pardot content container</strong>?&nbsp<small>1 per page, will be replaced by pardot form or content, this is the %%content%% template</label>
         </div>
       `
     },
