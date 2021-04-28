@@ -17,6 +17,13 @@ Right now it works with Jekyll and 11ty but nothing is documented yet
 * [x] Translation component: display different content depending on some liquid variable
 * [x] Load components in the "+" menu which are specific to a website and stored with the website
 
+Included adapters
+
+* [x] 11ty
+* [x] jekyll
+* [x] forestry
+* [x] Salesforce Pardot
+
 ## Support and documentation
 
 Please use the mother project's [Silex issues](https://github.com/silexlabs/Silex/issues) and [Silex documentation](https://github.com/silexlabs/Silex/wiki)
