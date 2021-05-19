@@ -16,6 +16,10 @@ export function redraw(type, {adapters, adapter}) {
         padding: 0 5px;
         color: white;
       }
+      label {
+          margin-top: 15px;
+          margin-bottom: 5px;
+      }
     </style>
 
     <label for="adapter-select">Adapter</label>

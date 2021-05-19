@@ -3,6 +3,17 @@ const yaml = require('js-yaml')
 
 const {TYPE_CMS} = require('../server/adapter-utils')
 
+const log = field => {
+  console.log(field)
+  return field
+}
+const sortByOrder = (f1, f2) => parseInt(f1.order || Infinity) - parseInt(f2.order || Infinity)
+
+const cleanupJson = field => ({
+  ...field,
+  order: undefined,
+})
+
 const mapTextAreas = field => field.type === 'textarea' ? {
   ...field,
   config: {
@@ -37,7 +48,12 @@ module.exports = function(unifile) {
         .map(template => ({
           name: 'writefile',
           path: context.to.path + '/.forestry/front_matter/templates/' + template.name,
-          content: '---\n' + yaml.dump(template),
+          content: '---\n' + yaml.dump({
+            ...template,
+            // FIXME: remove fields only needed to build the actions
+            id: undefined,
+            name: undefined,
+          }),
         })))
     },
     getForm() {
@@ -63,8 +79,10 @@ module.exports = function(unifile) {
         <input type="text" name="name"></input>
         <label>Label</label>
         <input type="text" name="label"></input>
-        <label>Default Value</label>
+        <label>Default Value (texts only)</label>
         <input type="text" name="default"></input>
+        <label>Order</label>
+        <input type="number" name="order"></input>
       `
     },
     toForestryTemplates: function(data) {
@@ -90,8 +108,11 @@ module.exports = function(unifile) {
                     .filter(filterVisible(data, page))
                     .filter(child => !!child.data.forestry)
                     .map(child => child.data.forestry)
+                    .sort(sortByOrder)
+                    .map(cleanupJson)
                     .map(mapTextAreas)
                     .map(mapColor),
+                  default: undefined,
                 }
               }
             }
@@ -103,6 +124,8 @@ module.exports = function(unifile) {
         // from el to forestry data
         .map(el => el.data.forestry)
         // handle special config of forestry fields
+        .sort(sortByOrder)
+        .map(cleanupJson)
         .map(mapTextAreas)
         .map(mapColor)
       }))
@@ -114,7 +137,7 @@ module.exports = function(unifile) {
       // add options to each page
       .map(page => ({
         ...page,
-        hide_body: true,
+        hide_body: !page.fields.find(field => field.name === 'content'),
         fields: page.fields.concat([{
           name: 'permalink',
           type: 'text',
@@ -131,7 +154,7 @@ module.exports = function(unifile) {
           config: {
             required: true,
           }
-        }]),
+        }]).filter(field => field.name != 'content'),
       }))
     }
   }
