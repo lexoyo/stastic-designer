@@ -133,6 +133,7 @@ module.exports = function(unifile) {
       .map(page => ({
         ...page,
         name: page.id + '.yml',
+        display_field: 'permalink',
       }))
       // add options to each page
       .map(page => ({
