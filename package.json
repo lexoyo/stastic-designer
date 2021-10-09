@@ -55,7 +55,7 @@
     "silex-website-builder": "silexlabs/Silex#develop"
   },
   "devDependencies": {
-    "electron": "10.1.5",
+    "electron": "10.2.0",
     "electron-builder": "22.9.1",
     "electron-rebuild": "2.3.2",
     "jest": "^27.2.1"
