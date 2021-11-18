@@ -28,6 +28,7 @@ const mapColor = field => field.type === 'color' ? {
     color_format: 'Hex',
   },
 } : field
+
 const filterVisible = (data, page) => el => !Api.isBody(el, data.elements) &&
   (el.pageNames.length === 0 || el.pageNames.includes(page.id)) &&
   (!Api.getFirstPagedParent(el, data.elements) ||
@@ -36,8 +37,20 @@ const filterVisible = (data, page) => el => !Api.isBody(el, data.elements) &&
 
 const CONTAINERS_TYPES = ['field_group_list', 'field_group']
 
+// remove all elements which are in a list
+const filterGroups = (data, root=null) => {
+  return el => {
+    // get all the parents which are groups
+    const parents = Api.getAllParents(el, data.elements)
+      .filter(parent => parent.data && parent.data.forestry && CONTAINERS_TYPES.includes(parent.data.forestry.type))
+    // select this element if it is a direct descendent of root, i.e. its first group parent is root
+    return (!!root && parents[0] === root) || (!root && parents.length === 0)
+  }
+}
+
 module.exports = function(unifile) {
   return {
+    filterGroups, // for unit tests
     info: {
       name: 'forestry',
       displayName: 'Forestry',
@@ -58,7 +71,7 @@ module.exports = function(unifile) {
     },
     getForm() {
       return `
-        <label for="type">Forestry Front Matter Template</label>
+        <label for="type">Type (Forestry Front Matter Template)</label>
         <select id="type" name="type">
           <option value=""></option>
           <option value="text">Text</option>
@@ -75,9 +88,9 @@ module.exports = function(unifile) {
           <option value="file">File</option>
           <option value="image_gallery">Gallery</option>
         </select>
-        <label>Name</label>
+        <label>Variable name (for use in { } tab})</label>
         <input type="text" name="name"></input>
-        <label>Label</label>
+        <label>Label (displayed in Forestry)</label>
         <input type="text" name="label"></input>
         <label>Default Value (texts only)</label>
         <input type="text" name="default"></input>
@@ -85,13 +98,11 @@ module.exports = function(unifile) {
         <input type="number" name="order"></input>
       `
     },
-    toForestryTemplates: function(data) {
-      return data.pages.map(page => ({
-        id: page.id.split('page-').slice(1).join('page-'),
-        label: page.displayName,
-        fields: data.elements
-        // filter invisible elements on the current page
-        .filter(filterVisible(data, page))
+
+    toForestryFields(data, page, elements) {
+      return elements
+      // filter invisible elements on the current page
+      .filter(filterVisible(data, page))
         // remove elements without forestry data
         .filter(el => !!el.data.forestry && !!el.data.forestry.type)
         // handle lists of object
@@ -103,15 +114,10 @@ module.exports = function(unifile) {
                 ...el.data,
                 forestry: {
                   ...el.data.forestry,
-                  fields: Api.getChildrenRecursive(el, data.elements)
-                    .filter(child => child !== el)
-                    .filter(filterVisible(data, page))
-                    .filter(child => !!child.data.forestry)
-                    .map(child => child.data.forestry)
-                    .sort(sortByOrder)
-                    .map(cleanupJson)
-                    .map(mapTextAreas)
-                    .map(mapColor),
+                  fields: this.toForestryFields(data, page,
+                    Api.getChildrenRecursive(el, data.elements)
+                    .filter(filterGroups(data, el))
+                  ),
                   default: undefined,
                 }
               }
@@ -119,8 +125,6 @@ module.exports = function(unifile) {
           }
           return el
         })
-        // remove all elements which are in a list
-        .filter(el => !Api.getAllParents(el, data.elements).find(parent => parent.data.forestry && CONTAINERS_TYPES.includes(parent.data.forestry.type)))
         // from el to forestry data
         .map(el => el.data.forestry)
         // handle special config of forestry fields
@@ -128,6 +132,17 @@ module.exports = function(unifile) {
         .map(cleanupJson)
         .map(mapTextAreas)
         .map(mapColor)
+    },
+
+    toForestryTemplates: function(data) {
+      // 1 layout (yaml file) per Silex page
+      return data.pages.map(page => ({
+        id: page.id.split('page-').slice(1).join('page-'),
+        label: page.displayName,
+        fields: this.toForestryFields(data, page, 
+          data.elements
+          .filter(filterGroups(data))
+        ),
       }))
       // add name
       .map(page => ({

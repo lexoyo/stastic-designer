@@ -1,0 +1,325 @@
+{
+    "site": {
+        "title": "",
+        "description": null,
+        "enableMobile": true,
+        "websiteUrl": null,
+        "faviconPath": null,
+        "thumbnailSocialPath": null,
+        "descriptionSocial": null,
+        "titleSocial": null,
+        "lang": "",
+        "width": 824,
+        "headUser": "",
+        "headStyle": "",
+        "headScript": "",
+        "hostingProvider": "stastic",
+        "twitterSocial": null,
+        "dataSources": {},
+        "fonts": [
+            {
+                "family": "'Roboto', sans-serif",
+                "href": "https://fonts.googleapis.com/css?family=Roboto"
+            }
+        ],
+        "styles": {
+            "all-style": {
+                "className": "all-style",
+                "templateName": "text",
+                "displayName": "All style",
+                "styles": {
+                    "desktop": {
+                        "normal": {
+                            "className": "all-style",
+                            "pseudoClass": "normal",
+                            "All": {
+                                "font-family": "'Roboto', sans-serif"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "isTemplate": false,
+        "file": {
+            "name": "stastic.html",
+            "folder": "tmp",
+            "path": "tmp/stastic.html",
+            "service": "fs",
+            "url": "http://localhost:6805/ce/fs/get/tmp/stastic.html",
+            "absPath": "/ce/fs/get/tmp/stastic.html"
+        },
+        "prodotypeDependencies": {},
+        "data": {
+            "stastic": {
+                "TYPE_TEMPLATE": "eleventy",
+                "TYPE_CMS": "forestry"
+            }
+        },
+        "publicationPath": {
+            "isDir": true,
+            "mime": "application/octet-stream",
+            "name": "publi",
+            "folder": "tmp",
+            "path": "tmp/publi",
+            "service": "fs",
+            "url": "http://localhost:6805/ce/fs/get/tmp/publi",
+            "absPath": "/ce/fs/get/tmp/publi"
+        }
+    },
+    "pages": [
+        {
+            "id": "page-page-1",
+            "displayName": "Page 1",
+            "link": {
+                "linkType": "LinkTypePage",
+                "href": "#!page-page-1"
+            },
+            "canDelete": true,
+            "canProperties": true,
+            "canMove": true,
+            "canRename": true,
+            "opened": false
+        }
+    ],
+    "elements": [
+        {
+            "id": "body-initial",
+            "pageNames": [],
+            "classList": [],
+            "type": "container-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [
+                "silex-id-1474394621033-3"
+            ],
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": false,
+            "enableDrop": true,
+            "enableResize": {
+                "top": false,
+                "bottom": false,
+                "left": false,
+                "right": false
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "background-color": "rgba(255,255,255,1)",
+                    "position": "static"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null
+            },
+            "innerHtml": "",
+            "tagName": "BODY"
+        },
+        {
+            "id": "silex-id-1474394621033-3",
+            "pageNames": [
+                "page-page-1"
+            ],
+            "classList": [],
+            "type": "section-element",
+            "isSectionContent": false,
+            "title": "",
+            "alt": null,
+            "children": [
+                "silex-id-1474394621032-2"
+            ],
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": true,
+            "enableDrop": true,
+            "enableResize": {
+                "top": false,
+                "bottom": false,
+                "left": false,
+                "right": false
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "position": "static",
+                    "margin-top": "-1px"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null
+            },
+            "innerHtml": "",
+            "tagName": "SECTION"
+        },
+        {
+            "id": "silex-id-1474394621032-2",
+            "pageNames": [],
+            "classList": [
+                "website-width"
+            ],
+            "type": "container-element",
+            "isSectionContent": true,
+            "title": "",
+            "alt": null,
+            "children": [
+                "silex-id-1635347173023-142"
+            ],
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": false,
+            "enableDrop": true,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "desktop": {
+                    "background-color": "transparent",
+                    "height": "257px",
+                    "position": "relative",
+                    "margin-left": "auto",
+                    "margin-right": "auto"
+                },
+                "mobile": {}
+            },
+            "data": {
+                "component": null,
+                "forestry": {
+                    "type": "field_group",
+                    "name": "main",
+                    "label": "main",
+                    "default": "",
+                    "order": ""
+                }
+            },
+            "innerHtml": "",
+            "tagName": "DIV"
+        },
+        {
+            "id": "silex-id-1635347173023-142",
+            "tagName": "DIV",
+            "type": "container-element",
+            "alt": null,
+            "title": null,
+            "isSectionContent": false,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "mobile": {},
+                "desktop": {
+                    "width": "228px",
+                    "height": "171px",
+                    "background-color": "rgba(242,189,239,1)",
+                    "position": "absolute",
+                    "top": "34px",
+                    "left": "570px"
+                }
+            },
+            "data": {
+                "component": null,
+                "forestry": {
+                    "type": "field_group",
+                    "name": "right",
+                    "label": "right",
+                    "default": "",
+                    "order": ""
+                }
+            },
+            "children": [
+                "silex-id-1637252021426-0"
+            ],
+            "pageNames": [],
+            "classList": [],
+            "attr": {},
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": true,
+            "enableDrop": true,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "innerHtml": ""
+        },
+        {
+            "id": "silex-id-1637252021426-0",
+            "tagName": "DIV",
+            "type": "container-element",
+            "alt": null,
+            "title": null,
+            "isSectionContent": false,
+            "visibility": {
+                "desktop": true,
+                "mobile": true
+            },
+            "style": {
+                "mobile": {},
+                "desktop": {
+                    "width": "137px",
+                    "height": "140px",
+                    "background-color": "rgba(242,189,189,1)",
+                    "position": "absolute",
+                    "top": "16.083328247070312px",
+                    "left": "31px"
+                }
+            },
+            "data": {
+                "component": null,
+                "forestry": {
+                    "type": "text",
+                    "name": "text right",
+                    "label": "text right",
+                    "default": "text right",
+                    "order": ""
+                }
+            },
+            "children": [],
+            "pageNames": [
+                "page-page-1"
+            ],
+            "classList": [],
+            "attr": {},
+            "link": null,
+            "enableEdit": false,
+            "enableDrag": true,
+            "enableDrop": true,
+            "enableResize": {
+                "top": true,
+                "bottom": true,
+                "left": true,
+                "right": true
+            },
+            "selected": false,
+            "useMinHeight": true,
+            "innerHtml": ""
+        }
+    ]
+}
