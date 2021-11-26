@@ -71,6 +71,15 @@ module.exports = function(unifile) {
     },
     getForm() {
       return `
+        <hr>
+        <h3>Page settings</h3>
+        <label for="display_field">Template display field</label>
+        <select id="display_field" name="display_field" data-model="page">
+          <option value="">-</option>
+          <option value="permalink">Permalink</option>
+        </select>
+        <hr>
+        <h3>Element settings</h3>
         <label for="type">Type (Forestry Front Matter Template)</label>
         <select id="type" name="type">
           <option value=""></option>
@@ -88,7 +97,7 @@ module.exports = function(unifile) {
           <option value="file">File</option>
           <option value="image_gallery">Gallery</option>
         </select>
-        <label>Variable name (for use in { } tab})</label>
+        <label>Variable name (for use in { } tab)</label>
         <input type="text" name="name"></input>
         <label>Label (displayed in Forestry)</label>
         <input type="text" name="label"></input>
@@ -143,12 +152,12 @@ module.exports = function(unifile) {
           data.elements
           .filter(filterGroups(data))
         ),
+        display_field: page.data && page.data.forestry && typeof(page.data.forestry.display_field) !== 'undefined' ? page.data.forestry.display_field : undefined,
       }))
       // add name
       .map(page => ({
         ...page,
         name: page.id + '.yml',
-        display_field: 'permalink',
       }))
       // add options to each page
       .map(page => ({

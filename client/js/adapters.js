@@ -36,35 +36,51 @@ export function selectAdapter(type, selected=null) {
 export function updateEditor(type) {
   if (state[type].adapter) {
     const form = container[type].querySelector('form')
-    const data = getAppData(silex.getSelectedElements())[state[type].adapter.name]
+    const elementData = getElementData(silex.getSelectedElements())[state[type].adapter.name]
+    const pageData = getPageData(silex.getCurrentPage())[state[type].adapter.name]
     Array.from(form.querySelectorAll('[name]'))
       .forEach(el => el.setAttribute('data-selection-start', el.selectionStart))
+    // remove all values from form
     Array.from(form.querySelectorAll('[name]'))
       .forEach(el => {
         el.value = ''
         el.checked = false
       })
-    if (data) {
-      Object.entries(data).forEach(([name, value]) => {
-        const el = form.querySelector(`[name=${name}]`)
-        if (el) {
-          if (typeof value === 'boolean') el.checked = value
-          else {
-            el.value = value
-            el.checked = false
-          }
-          if (el.selectionStart !== null) {
-            // for text inputs
-            const carret = parseInt(el.getAttribute('data-selection-start'))
-            el.selectionStart = el.selectionEnd = carret
-          }
-        } else console.error('Did not find the input with name', name, '(', value, ')')
-      })
+    if (elementData) {
+      Object.entries(elementData)
+      .forEach(data => updateEditorField(form, data))
+    }
+    if (pageData) {
+      Object.entries(pageData)
+      .forEach(data => updateEditorField(form, data))
     }
   }
 }
 
-export function getAppData(selection) {
+function updateEditorField(form, [name, value]) {
+  const el = form.querySelector(`[name=${name}]`)
+  if (el) {
+    if (typeof value === 'boolean') el.checked = value
+    else {
+      el.value = value
+      el.checked = false
+    }
+    if (el.selectionStart !== null) {
+      // for text inputs
+      const carret = parseInt(el.getAttribute('data-selection-start'))
+      el.selectionStart = el.selectionEnd = carret
+    }
+  } else console.error('Did not find the input with name', name, '(', value, ')')
+}
+
+export function getPageData(page) {
+  if (page && page.data) {
+    return page.data
+  }
+  return {}
+}
+
+export function getElementData(selection) {
   if (selection && selection[0] && selection[0].data) {
     return selection[0].data
   }
@@ -76,28 +92,50 @@ export function getDataFromForm(form) {
   .map(el => ({
     name: el.name,
     value: el.checked || el.value,
+    model: el.getAttribute('data-model') || 'element',
   }))
-  .reduce((result, {name, value}) => {
-    result[name] = value
-    return result
-  }, {})
+  .reduce((models, {name, value, model}) => {
+    models[model][name] = value
+    return models
+  }, {element: {}, page: {}})
 }
 
 // update the selected element with data from the UI
-export function updateData(adapter, data) {
+export function updateData(adapter, {element, page}) {
+  // Update page data
+  const p = silex.getCurrentPage()
+  // init page data (it should be in silex)
+  p.data = p.data || {}
+  // build the new data for the page
+  const newPage = Object.values(page).filter(v => !!v).length ? {
+    ...p.data[adapter.name],
+    ...page,
+  } : null
+  // update the page
+  if (!deepEqual(newPage, p.data[adapter.name])) {
+    silex.updatePages([{
+      ...p,
+      data: {
+        ...p.data,
+        [adapter.name]: newPage,
+      },
+    }])
+  }
+
+  // Update selected element's data
   const selection = silex.getSelectedElements()
   const el = selection[0]
-  const newData = Object.values(data).filter(v => !!v).length ? {
+  const newElement = Object.values(element).filter(v => !!v).length ? {
     ...el.data[adapter.name],
-    ...data,
+    ...element,
   } : null
 
-  if (!deepEqual(data, el.data[adapter.name])) {
+  if (!deepEqual(newElement, el.data[adapter.name])) {
     silex.updateElements([{
       ...el,
       data: {
         ...el.data,
-        [adapter.name]: newData,
+        [adapter.name]: newElement,
       },
     }])
   }
