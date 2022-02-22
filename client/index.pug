@@ -20,6 +20,20 @@ append head-start
 append silex-options
   script.
     silex.config.componentFolders.push('components/')
+    // get url GET params
+    const makeObj = (aggr, pair) => {
+      const [key, val] = pair.split('=')
+      return {
+        ...aggr,
+        [key]: val,
+      }
+    }
+    const params = window.location.search.substr(1).split('&').reduce(makeObj, {})
+    // make silex start in single site mode
+    // @see https://github.com/silexlabs/Silex/wiki/Single-site-mode
+    if(params.path && params.service) {
+      silex.config.singleSiteMode = true
+    }
 
 append silex-start
   script(type='text/javascript' src='js/index.js')

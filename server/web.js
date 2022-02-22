@@ -62,5 +62,20 @@ silex.app.use('/', serveStatic(path.resolve(__dirname, '..', 'pub')))
 // serve the static assets
 silex.app.use('/static', serveStatic(path.resolve(__dirname, '..', 'static')))
 
+// route to get authenticated on github in 1 call
+silex.app.use('/auth', async (req, res, next) => {
+  console.log(req.session)
+  const {isLoggedIn} = silex.unifile.getInfos(req.session, 'github')
+  console.log(req.session)
+  if(isLoggedIn) {
+    const rootUrl = process.env.SERVER_URL || `http://localhost:6805`
+    res.redirect(rootUrl)
+  } else {
+    const url = await silex.unifile.getAuthorizeURL(req.session, 'github')
+    res.send(`<a href="${url}" target="_blank">Click here to auhtenticate with Github</a>`)
+    //res.redirect(url)
+  }
+})
+
 // export Silex so that the caller can start Silex with silex.start(() => {})
 module.exports = silex
