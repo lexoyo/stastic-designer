@@ -22,12 +22,18 @@ async function start() {
   silex.addDialog({
     id: TYPE_TEMPLATE,
     type: 'properties',
-    data: { displayName: '{ }' }
+    data: {
+      className: 'fa',
+      displayName: '{ }',
+    },
   })
   silex.addDialog({
     id: TYPE_CMS,
     type: 'properties',
-    data: { displayName: 'CMS' }
+    data: {
+      className: 'fa',
+      displayName: 'CMS',
+    },
   })
 
   // ///////////////////////
