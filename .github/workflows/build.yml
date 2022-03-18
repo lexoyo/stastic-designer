@@ -18,18 +18,19 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 15 # >14 for recent electron-build
       - name: patch node gyp on windows to support Visual Studio 2019
         shell: powershell
         if: matrix.os == 'windows-latest'
         run: |
+          # npm install --g --production windows-build-tools --vs2015 # prevent error "Could not find any Visual Studio installation to use", found in https://stackoverflow.com/questions/57541402/node-gyp-configure-got-gyp-err-find-vs
           npm install --global node-gyp@latest
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
-      - name: Run tests
-        uses: Adzz/yarn_command_action@v1.0.0
-        if: matrix.os == 'linux-latest'
-        with:
-          command: test
+      # - name: Run tests
+      #   uses: Adzz/yarn_command_action@v1.0.0
+      #   if: matrix.os == 'ubuntu-latest'
+      #   with:
+      #     command: test
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
