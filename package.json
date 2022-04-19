@@ -7,7 +7,6 @@
     "node": ">=10.15.3 <=12.22.10"
   },
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
     "postinstall removed because breaks exec without electron": "electron-builder install-app-deps",
     "start": "node .",
     "start:debug": "ENABLE_FS=true node .",
