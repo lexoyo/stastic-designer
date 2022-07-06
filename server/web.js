@@ -3,6 +3,7 @@ const isElectron = require('is-electron')
 
 const path = require('path')
 const serveStatic = require('serve-static')
+const node_modules = require('node_modules-path')
 
 const config = new Config()
 const {listAdapters, createAdapterClass} = require('./adapter-utils')
@@ -47,7 +48,7 @@ silex.app.use('/adapter/', (req, res) => {
 
 // serve custom script
 silex.app.use('/js/', serveStatic(path.resolve(__dirname, '..', 'client', 'js')))
-silex.app.use('/lit-html/', serveStatic(path.resolve(__dirname, '..', 'node_modules', 'lit-html')))
+silex.app.use('/lit-html/', serveStatic(path.resolve(node_modules('lit-html'), 'lit-html')))
 
 // serve modified html to electron
 // for some reason serving the whole folder does not override index.html in electron
