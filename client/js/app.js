@@ -42,7 +42,9 @@ async function start() {
   silex.subscribeSite((prev, next) => {
     // load custom components
     if (next.publicationPath && prev.publicationPath !== next.publicationPath) {
-      const path = silex.getSite().file.url.split('/').slice(0, -1).join('/')
+      const baseUrl = window.location.origin + silex.getSite().file.absPath
+      // const path = silex.getSite().file.url.split('/').slice(0, -1).join('/')
+      const path = baseUrl.split('/').slice(0, -1).join('/')
       silex.loadComponents([
         './prodotype/components', 
         './components', 
