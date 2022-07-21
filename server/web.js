@@ -26,6 +26,12 @@ config.publisherOptions.enableHostingGhPages = false
 // create the Silex server
 const silex = new SilexServer(config)
 
+// git mode
+if(process.env.ENABLE_GIT === 'true') {
+  const GitService = require('./GitService')
+  silex.unifile.use(new GitService());
+}
+
 // hosting provider for custom publication
 const hostingProvider = new HostingProvider(silex.unifile)
 silex.publishRouter.addHostingProvider(hostingProvider)
