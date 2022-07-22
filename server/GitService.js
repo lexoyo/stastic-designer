@@ -18,22 +18,6 @@ const diff = require("virtual-dom/diff")
 const patch = require("virtual-dom/patch")
 
 const parser = require('vdom-parser')
-console.error('FIXME: this parser removes comments, and some of them are essential to Silex')
-// This does not work, patch is always empty:
-// const parser = require('html2hscript')
-// async function parseDom(dom) {
-//   return new Promise((resolve, reject) => {
-//     parser(dom.window.document.documentElement, function(err, hscript) {
-//       if(err) {
-//         console.error('PARSING ERROR', err)
-//         reject(err)
-//       } else {
-//         console.log('success', hscript, typeof hscript)
-//         resolve(hscript)
-//       }
-//     })
-//   })
-// }
 
 /**
  * Service connector extends the local filesystem connector (unifile-fs)
@@ -126,9 +110,15 @@ class GitService extends FsConnector {
     }
     return super.writeFile(session, path, data)
   }
-  async readFile(session, path) {
+
+  /**
+   * read file from local file system
+   * for HTML and JSON file, adds the git hash (revparse) to the data
+   * @params revparse The gith hash, defaults to the current file git hash, exposed here for unit testing
+   */
+  async readFile(session, path, revparse = null) {
     const dir = '/' + dirname(path)
-    const revparse = await simpleGit(dir).revparse('HEAD')
+    revparse = revparse || await simpleGit(dir).revparse('HEAD')
     const data = (await super.readFile(session, path)).toString()
     if(path.endsWith('.html')) {
       const dom = new JSDOM(data)
