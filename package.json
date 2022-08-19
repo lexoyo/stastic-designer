@@ -17,7 +17,7 @@
     "build:electron removed": "electron-rebuild",
     "build:pub": "mkdirp pub/",
     "build:components": "prodotype components/ pub/components",
-    "build:html": "pug client/index.pug --out pub/ --basedir `node_modules silex-website-builder`",
+    "build:html": "pug client/index.pug --out pub/ --basedir node_modules/",
     "test:watch": "jest --watch",
     "test": "jest"
   },
