@@ -9,13 +9,14 @@ Right now it works with Jekyll and 11ty but nothing is documented yet
 ## Features
 
 * [x] Desktop app to work locally and possibly offline
-* [x] Online mode to work online without install - I have setup this [instance you can use to test it])(https://design.stastic.net)
-* [x] Tool to convert the selected element to a component 
-* [x] The "template" component: display arbitrary HTML as a preview in Silex and in preview mode, and will be replaced by another HTML during publication possibly including liquid or any template language
-* [x] The forestry component: generate the forestry.io files to create a custom admin corresponding to the current page (in forestry this means a page type, and an editor for each page type)
+* [x] Online mode to work online without install - I have setup this [instance you can use to test it](https://design.stastic.net)
+* [x] The "template" panel (`{ }` tab): write HTML+liquid and it will be inserted at publication time while still displaying the element in Silex and in preview mode
 * [x] Publication for 11ty and Jekyll: each page becomes a layout, files are stored in the proper folders and formats (css, js, html, assets)
-* [x] Translation component: display different content depending on some liquid variable
 * [x] Load components in the "+" menu which are specific to a website and stored with the website
+* [x] Tool to convert the selected element to a component 
+
+![The "template" panel](https://user-images.githubusercontent.com/715377/185664883-ccada61d-857e-46c6-8d8e-4115d09ae1cc.png)
+
 
 Included adapters
 
