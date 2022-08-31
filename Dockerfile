@@ -1,6 +1,7 @@
-FROM node:16
+FROM node:16.13.1
 
 # example of use:
+# docker build -t silex-image .
 # docker run -p 6805:6805 -t --rm --name silex -e ENABLE_FS=true -e GITHUB_CLIENT_ID=false -e FS_ROOT=/ silex-image
 
 # see doc about how to use this docker image here:
@@ -26,7 +27,8 @@ WORKDIR /silex
 # RUN yarn install --ignore-engines
 
 # Install dependencies
-RUN npm install
+# Running install with --unsafe-perm option becaus when running as root, npm won't run any scripts.
+RUN npm install --unsafe-perm
 
 # Build stastic
 RUN npm run build
