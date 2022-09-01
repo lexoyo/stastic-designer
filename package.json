@@ -57,7 +57,7 @@
     "object-hash": "^3.0.0",
     "prodotype": "^1.0.27",
     "pug-cli": "^1.0.0-alpha6",
-    "silex-website-builder": "2.7.51",
+    "silex-website-builder": "2.7.58",
     "simple-git": "^3.10.0",
     "vdom-parser": "^1.4.1",
     "virtual-dom": "^2.1.1"
