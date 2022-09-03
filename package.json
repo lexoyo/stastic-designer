@@ -1,6 +1,6 @@
 {
   "name": "stastic-designer",
-  "version": "2.7.62",
+  "version": "2.7.63",
   "description": "template editor based on Silex website builder",
   "main": "./server/index.js",
   "engines": {
@@ -51,20 +51,22 @@
     "js-yaml": "^4.1.0",
     "jsdom": "^20.0.0",
     "jsondiffpatch": "^0.4.1",
-    "lit-html": "^2.2.1",
+    "lit-html": "^2.3.1",
     "mkdirp": "^1.0.4",
     "node_modules-path": "^2.0.5",
     "npm-run-all": "^4.1.5",
     "object-hash": "^3.0.0",
-    "prodotype": "^1.0.27",
+    "prodotype": "^1.0.28",
     "pug-cli": "^1.0.0-alpha6",
-    "silex-website-builder": "2.7.62",
-    "simple-git": "^3.10.0",
+    "silex-website-builder": "2.7.63",
+    "simple-git": "^3.13.0",
     "vdom-parser": "^1.4.1",
-    "virtual-dom": "^2.1.1",
-    "electron": "10.1.5",
-    "electron-builder": "22.9.1",
-    "electron-rebuild": "2.3.2",
+    "virtual-dom": "^2.1.1"
+  },
+  "devDependencies": {
+    "electron": "20.1.1",
+    "electron-builder": "23.3.3",
+    "electron-rebuild": "3.2.9",
     "jest": "^27.5.1"
   }
 }
