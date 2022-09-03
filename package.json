@@ -8,6 +8,7 @@
   },
   "scripts": {
     "postinstall removed because breaks exec without electron": "electron-builder install-app-deps",
+    "postinstall-ci": "electron-builder install-app-deps",
     "start": "node .",
     "start:local": "ENABLE_FS=true node .",
     "start:git": "ENABLE_GIT=true ENABLE_FS=true node .",

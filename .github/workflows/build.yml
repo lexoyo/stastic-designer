@@ -31,6 +31,7 @@ jobs:
       #   if: matrix.os == 'ubuntu-latest'
       #   with:
       #     command: test
+      - run npm run postinstall-ci
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
