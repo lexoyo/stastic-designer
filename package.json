@@ -62,8 +62,6 @@
     "simple-git": "^3.10.0",
     "vdom-parser": "^1.4.1",
     "virtual-dom": "^2.1.1"
-  },
-  "devDependencies": {
     "electron": "10.1.5",
     "electron-builder": "22.9.1",
     "electron-rebuild": "2.3.2",
