@@ -1,4 +1,4 @@
-FROM node:16.13.1
+FROM node:16
 
 # example of use:
 # docker build -t silex-image .
@@ -13,6 +13,8 @@ FROM node:16.13.1
 # env vars can be overriden using the `-e` option in docker run, some env vars are:
 # ENV ENABLE_FS, ENV ENABLE_FTP, ENABLE_SFTP, ENABLE_WEBDAV
 
+EXPOSE 6805
+
 COPY . /silex
 WORKDIR /silex
 #RUN apt-get update
@@ -21,17 +23,15 @@ WORKDIR /silex
 # Install yarn
 # RUN npm install -g yarn
 
-# Build with yarn
+# With yarn
 # This is a workaround because npm install takes a long time
 # This doesn't work because silex-website-builder has a postinstall script containing an npm command
 # RUN yarn install --ignore-engines
+# RUN yarn build
+# CMD ["yarn", "start"]
 
-# Install dependencies
+# With npm
 # Running install with --unsafe-perm option becaus when running as root, npm won't run any scripts.
 RUN npm install --unsafe-perm
-
-# Build stastic
 RUN npm run build
-
-EXPOSE 6805
 CMD ["npm", "start"]
