@@ -4,7 +4,7 @@ import { render } from '../lit-html/lit-html.js'
 import { deepEqual } from './utils.js'
 
 export async function loadAdapters() {
-  const response = await fetch('/adapter/')
+  const response = await fetch('./adapter/')
   return response.json()
 }
 
