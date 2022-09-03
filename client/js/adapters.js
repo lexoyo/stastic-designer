@@ -1,6 +1,6 @@
 import { container, state } from './globals.js'
 import { redraw } from './ui.js'
-import { render } from '/lit-html/lit-html.js'
+import { render } from './lit-html/lit-html.js'
 import { deepEqual } from './utils.js'
 
 export async function loadAdapters() {
