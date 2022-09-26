@@ -1,6 +1,6 @@
 {
   "name": "stastic-designer",
-  "version": "2.7.65",
+  "version": "2.7.66",
   "description": "template editor based on Silex website builder",
   "main": "./server/index.js",
   "engines": {
