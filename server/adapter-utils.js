@@ -21,7 +21,7 @@ module.exports = {
         const domEl = doc.querySelector('.' + el.id)
         const domElContent = domEl.querySelector('.silex-element-content') || domEl
         if(el.data[adapterName].replaceChildren) {
-          domElContent.innerHTML = el.data[adapterName].replaceChildren
+          domElContent.innerText = el.data[adapterName].replaceChildren
         }
         // if(el.data[adapterName].beforeChildren) {
         //   domElContent.prepend(el.data[adapterName].beforeChildren)
@@ -34,14 +34,14 @@ module.exports = {
         // query the element again and again as its ref will change
         const e = () => doc.querySelector('.' + el.id)
         if(el.data[adapterName].before) {
-          e().outerHTML = el.data[adapterName].before + e().outerHTML
+          e().outerText = el.data[adapterName].before + e().outerText
         }
         if(el.data[adapterName].after) {
-          e().outerHTML += el.data[adapterName].after
+          e().outerText += el.data[adapterName].after
         }
         // // this needs to be last as it will remove the element
         // if(el.data[adapterName].replace) {
-        //   e().outerHTML = el.data[adapterName].replace
+        //   e().outerText = el.data[adapterName].replace
         // }
       })
   },
