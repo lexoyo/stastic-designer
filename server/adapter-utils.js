@@ -11,14 +11,16 @@ module.exports = {
     return adapter(unifile)
   },
   insertTemplates: async (context, adapterName) => {
+    const doc = context.document
     context.data.elements
       .filter(el => !!el.data[adapterName])
-      .filter(el => !!context.document.querySelector('.' + el.id))
-      .forEach(el => {
-        const doc = context.document
-
-        // Children
+      .map(el => {
         const domEl = doc.querySelector('.' + el.id)
+        return { el, domEl }
+      })
+      .filter(({el, domEl}) => !!domEl)
+      .forEach(({el, domEl}) => {
+        // Children
         const domElContent = domEl.querySelector('.silex-element-content') || domEl
         if(el.data[adapterName].replaceChildren) {
           domElContent.innerHTML = el.data[adapterName].replaceChildren
