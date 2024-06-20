@@ -1,4 +1,18 @@
-# Stastic designer
+# replaced by silex v3
+
+this tool has been replaced by silex v3
+https://v3.silex.me
+
+I invite you to read our kickoff article here: https://www.silexlabs.org/silex-v3-kickoff/
+
+Links
+
+https://short.silex.me/docs
+https://short.silex.me/video_en
+https://short.silex.me/community 
+https://short.silex.me/news_en
+
+## Stastic designer
 
 This is a work in progress to create a drag and drop universal template editor based on [Silex open source website builder](https://www.silex.me).
 
